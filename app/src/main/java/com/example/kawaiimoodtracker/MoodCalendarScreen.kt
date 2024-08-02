@@ -87,7 +87,8 @@ fun DayRecordedMoods(modifier: Modifier = Modifier) {
     Column {
         Text(
             text = "July 29",
-            fontSize = 20.sp
+            fontSize = 20.sp,
+            modifier = modifier.padding(start = 16.dp)
             )
         Spacer(modifier = modifier.height(16.dp))
         LazyRow (modifier = modifier.fillMaxWidth()){
