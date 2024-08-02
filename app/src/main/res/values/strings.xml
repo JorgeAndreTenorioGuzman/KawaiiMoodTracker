@@ -3,4 +3,6 @@
     <string name="how_are_you">How are you feeling?</string>
     <string name="add_expression">Add an Expression</string>
     <string name="AddButton">Add</string>
+    <string name="name_feeling">Name Feeling</string>
+    <string name="close_addmoodscreen">close</string>
 </resources>
