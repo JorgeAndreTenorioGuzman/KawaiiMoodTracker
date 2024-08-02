@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -93,7 +94,8 @@ fun CurrentMoodScreen(modifier: Modifier = Modifier) {
                 text = "Generate quote",
                 modifier = modifier
                     .width(271.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontStyle = FontStyle.Italic
             )
             Spacer(modifier = modifier.height(16.dp))
             Box(
@@ -154,6 +156,10 @@ fun RecordReason(modifier: Modifier = Modifier) {
     ) {
         TextField(
             value = "",
+            label = { Text(
+                text = "Add reason",
+                fontSize = 13.sp
+            )},
             onValueChange = {},
             modifier = Modifier
                 .width(212.dp)
@@ -162,7 +168,7 @@ fun RecordReason(modifier: Modifier = Modifier) {
             colors = TextFieldDefaults.colors(
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
-            )
+            ),
 
         )
         Spacer(modifier = modifier.width(4.dp))
@@ -172,7 +178,6 @@ fun RecordReason(modifier: Modifier = Modifier) {
                 .size(41.dp)
                 .padding(0.dp),
             shape = MaterialTheme.shapes.medium,
-
 
         ) {
             Icon(
