@@ -44,7 +44,7 @@ fun PreviousMoodScreen(modifier: Modifier = Modifier) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        //modifier = modifier.padding(start = 48.dp, end = 48.dp, bottom = 48.dp)
+        //modifier = modifier.fillMaxSize()
     ) {
         Row (modifier =  modifier.fillMaxWidth()){
             IconButton(onClick = { /*TODO*/ }) {

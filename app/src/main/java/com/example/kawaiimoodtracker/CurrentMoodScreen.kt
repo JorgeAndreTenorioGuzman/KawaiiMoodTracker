@@ -48,106 +48,138 @@ fun CurrentMoodScreen(modifier: Modifier = Modifier) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(top = 16.dp, bottom = 48.dp)
+        modifier = modifier
+            .padding(top = 32.dp)
+            .fillMaxSize()
     ) {
-        Row (modifier =  modifier.fillMaxWidth()){
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    imageVector = Icons.Sharp.DateRange,
-                    modifier = modifier
-                        .size(48.dp),
-                    contentDescription = "Mood Calendar Button")
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            IconButton(onClick = { /*TODO*/}) {
-                Icon(
-                    imageVector = Icons.Sharp.AddCircle,
-                    modifier = modifier
-                        .size(48.dp),
-                    contentDescription = "Add mood Button" )
-            }
-        }
 
-        Column (horizontalAlignment = Alignment.CenterHorizontally,){
-            Row (modifier =  modifier.width(230.dp)) {
-                IconButton(
-                    onClick = { /*TODO*/ },
+        //top bar buttons
+        TopBarButtons()
 
-                    ) {
-                    Icon(
-                        imageVector = Icons.Sharp.Refresh,
-                        contentDescription = "Generate quote"
-                    )
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                IconButton(
-                    onClick = { /*TODO*/ },
+        //quote generator
+        QuoteGenerator()
 
-                ) {
-                    Icon(
-                        imageVector = Icons.Sharp.Close,
-                        contentDescription = "Generate quote"
-                    )
-                }
-            }
-            Text(
-                text = "Generate quote",
-                modifier = modifier
-                    .width(271.dp),
-                textAlign = TextAlign.Center,
-                fontStyle = FontStyle.Italic
-            )
-            Spacer(modifier = modifier.height(16.dp))
-            Box(
-                modifier = modifier
-                    .size(224.dp)
-                    .clip(MaterialTheme.shapes.medium)
+        Spacer(modifier = modifier.height(16.dp))
 
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
-                    modifier = modifier
-                        .fillMaxSize()
-                        .clip(MaterialTheme.shapes.medium),
+        //image
+        ExpressionImage()
 
-                    contentDescription = "Expression Image")
-            }
-            Spacer(modifier = modifier.height(16.dp))
-            Text(
-                text = "Awesome",
-                fontSize = 24.sp,
-                modifier = modifier
-                    .width(187.dp)
-                    .height(39.dp),
-                textAlign = TextAlign.Center,
-            )
+        Spacer(modifier = modifier.height(16.dp))
 
-            Text(
-                text = "July 29",
-                fontSize = 20.sp,
-                modifier = modifier
-                    .width(103.dp)
-                    .height(23.dp),
-                textAlign = TextAlign.Center,
-            )
-            Spacer(modifier = modifier.height(8.dp))
-            Text(
-                text = "9:00 pm",
-                fontSize = 20.sp,
-                modifier = modifier
-                    .width(103.dp)
-                    .height(23.dp),
-                textAlign = TextAlign.Center,
-            )
-            Spacer(modifier = modifier.height(16.dp))
+       //date and time
+        DateandTimeofMood()
+        
+        Spacer(modifier = modifier.height(16.dp))
 
-            RecordReason()
+        RecordReason()
 
-        }
+        Spacer(modifier = modifier.height(16.dp))
+
     }
 
 }
 
+@Composable
+fun DateandTimeofMood(modifier: Modifier = Modifier) {
+    Text(
+        text = "July 29",
+        fontSize = 20.sp,
+        modifier = modifier
+            .width(103.dp),
+        textAlign = TextAlign.Center,
+    )
+    Spacer(modifier = modifier.height(8.dp))
+    Text(
+        text = "9:00 pm",
+        fontSize = 20.sp,
+        modifier = modifier
+            .width(103.dp)
+            .height(23.dp),
+        textAlign = TextAlign.Center,
+    )
+}
+
+@Composable
+fun TopBarButtons(modifier: Modifier = Modifier) {
+    Row (modifier =  modifier.fillMaxWidth()){
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(
+                imageVector = Icons.Sharp.DateRange,
+                modifier = modifier
+                    .size(48.dp),
+                contentDescription = "Mood Calendar Button")
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        IconButton(onClick = { /*TODO*/}) {
+            Icon(
+                imageVector = Icons.Sharp.AddCircle,
+                modifier = modifier
+                    .size(48.dp),
+                contentDescription = "Add mood Button" )
+        }
+    }
+}
+
+@Composable
+fun QuoteGenerator(modifier: Modifier = Modifier) {
+    Row (modifier =  modifier.width(230.dp)) {
+        IconButton(
+            onClick = { /*TODO*/ },
+
+
+            ) {
+            Icon(
+                imageVector = Icons.Sharp.Refresh,
+                contentDescription = "Generate quote"
+            )
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        IconButton(
+            onClick = { /*TODO*/ },
+
+            ) {
+            Icon(
+                imageVector = Icons.Sharp.Close,
+                contentDescription = "Generate quote"
+            )
+        }
+    }
+    Text(
+        text = "Generate quote",
+        modifier = modifier
+            .width(271.dp),
+        textAlign = TextAlign.Center,
+        fontStyle = FontStyle.Italic
+    )
+}
+
+@Composable
+fun ExpressionImage(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .size(224.dp)
+            .clip(MaterialTheme.shapes.medium)
+
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_launcher_background),
+            modifier = modifier
+                .fillMaxSize()
+                .clip(MaterialTheme.shapes.medium),
+
+            contentDescription = "Expression Image")
+    }
+
+    Spacer(modifier = modifier.height(16.dp))
+
+    Text(
+        text = "Awesome",
+        fontSize = 24.sp,
+        modifier = modifier
+            .width(187.dp),
+        textAlign = TextAlign.Center,
+    )
+}
 @Composable
 fun RecordReason(modifier: Modifier = Modifier) {
 
@@ -169,22 +201,23 @@ fun RecordReason(modifier: Modifier = Modifier) {
             colors = TextFieldDefaults.colors(
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
+                unfocusedContainerColor = Color(0xFFD9D9D9)
             ),
 
         )
         Spacer(modifier = modifier.width(4.dp))
-        Button(
+        IconButton(
             onClick = { /*TODO*/},
             modifier = Modifier
                 .size(41.dp)
                 .padding(0.dp),
-            shape = MaterialTheme.shapes.medium,
+            /*shape = MaterialTheme.shapes.medium,*/
 
         ) {
             Icon(
                 imageVector = Icons.Sharp.Send,
                 contentDescription = "send",
-                tint = Color.White,
+                tint = Color(0xFFFDBED4),
                 modifier = Modifier
                     .size(24.dp),
             )
