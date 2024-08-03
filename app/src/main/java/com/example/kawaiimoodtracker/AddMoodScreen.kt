@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
@@ -49,66 +50,76 @@ import com.example.kawaiimoodtracker.ui.theme.KawaiiMoodTrackerTheme
 
 @Composable
 fun AddMoodScreen(modifier: Modifier = Modifier) {
-    var text by remember { mutableStateOf("") }
 
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        Text(
-            text = stringResource(id = R.string.how_are_you),
-            textAlign = TextAlign.Center,
-            fontSize = 32.sp,
-            modifier = modifier
-                .width(272.dp)
-                .height(96.dp),
-            lineHeight = 39.sp
-        )
+        CancelButton(modifier = Modifier.align(Alignment.End))
+
+        HowAreYouText()
+
+        ExpressionDisplay()
+
+        Spacer(modifier = modifier.height(16.dp))
+
+        NameFeelingTextField()
+
+        Spacer(modifier = modifier.height(16.dp))
+
+        AddMoodButton()
+
         
-        Button(
-            onClick = { /*TODO*/ },
-            shape = MaterialTheme.shapes.medium,
-            modifier = modifier
-                .width(224.dp)
-                .height(224.dp)
+    }
+}
 
+@Composable
+fun AddMoodButton(modifier: Modifier = Modifier) {
+    Button(
+        onClick = { /*TODO*/ },
+        enabled = false,
+        modifier = Modifier
+            // .padding(24.dp)
+            .height(46.dp)
+            .width(224.dp)
 
-        ) {
-           Icon(
-               imageVector = Icons.Sharp.AddCircle,
-               modifier = modifier
-                   .width(67.dp)
-                   .height(61.dp),
-               contentDescription = stringResource(id = R.string.add_expression))
-        }
-        Spacer(modifier = modifier.height(16.dp))
-        TextField(
-            value = text,
-            onValueChange = { text = it},
-            label = { Text(text = stringResource(id = R.string.name_feeling))},
-            shape = MaterialTheme.shapes.medium,
-            modifier = modifier
-                .width(257.dp)
-                .height(48.dp)
-
-
-
+    ) {
+        Text(
+            text = stringResource(id = R.string.AddButton)
         )
-        Spacer(modifier = modifier.height(16.dp))
-        Button(
-            onClick = { /*TODO*/ },
-            enabled = false,
-            modifier = Modifier
-                // .padding(24.dp)
-                .height(46.dp)
-                .width(224.dp)
+    }
+}
+@Composable
+fun HowAreYouText(modifier: Modifier = Modifier) {
+    Text(
+        text = stringResource(id = R.string.how_are_you),
+        textAlign = TextAlign.Center,
+        fontSize = 32.sp,
+        modifier = modifier
+            .width(272.dp)
+            .height(96.dp),
+        lineHeight = 39.sp
+    )
+}
 
-        ) {
-          Text(
-              text = stringResource(id = R.string.AddButton)
-          )
-        }
+@Composable
+fun ExpressionDisplay(modifier: Modifier = Modifier) {
+    Button(
+        onClick = { /*TODO*/ },
+        shape = MaterialTheme.shapes.medium,
+        modifier = modifier
+            .width(224.dp)
+            .height(224.dp)
+
+
+    ) {
+        Icon(
+            imageVector = Icons.Sharp.AddCircle,
+            modifier = modifier
+                .width(67.dp)
+                .height(61.dp),
+            contentDescription = stringResource(id = R.string.add_expression))
     }
 }
 
@@ -126,7 +137,22 @@ fun EmotionsGrid(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun NameFeelingTextField(modifier: Modifier = Modifier) {
+    var text by remember { mutableStateOf("") }
+    TextField(
+        value = text,
+        onValueChange = { text = it},
+        label = { Text(text = stringResource(id = R.string.name_feeling))},
+        shape = MaterialTheme.shapes.medium,
+        modifier = modifier
+            .width(257.dp)
+            .height(48.dp)
 
+
+
+    )
+}
 @Composable
 fun ExpressionButton(modifier: Modifier = Modifier) {
 
@@ -143,15 +169,14 @@ fun ExpressionButton(modifier: Modifier = Modifier) {
 @Composable
 fun CancelButton(modifier: Modifier = Modifier) {
 
-    IconButton(onClick = { /*TODO*/ }) {
-        Icon(
-            imageVector = Icons.Sharp.Close,
-            contentDescription = "",
-            modifier = modifier
-                .size(48.dp)
-        )
+        IconButton(onClick = { /*TODO*/ }, modifier = modifier) {
+            Icon(
+                imageVector = Icons.Sharp.Close,
+                modifier = modifier.size(48.dp),
+                contentDescription = ""
+            )
+        }
 
-    }
 }
 
 @Preview (showBackground = true)
