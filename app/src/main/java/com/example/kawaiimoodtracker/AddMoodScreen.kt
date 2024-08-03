@@ -190,14 +190,14 @@ fun ExpressionButton(modifier: Modifier = Modifier) {
         painter = painterResource(id = R.drawable.awesome_expression),
         contentDescription = "",
         modifier = modifier
-            //.padding(4.dp)
-            //.clip(MaterialTheme.shapes.medium)
+            .padding(4.dp)
+            .clip(MaterialTheme.shapes.medium)
             .clickable { }
-            /*.border(
+            .border(
                 width = 1.dp,
                 color = Color(0xFFA0A0A0),
                 shape = MaterialTheme.shapes.medium
-            )*/
+            )
     )
 }
 
