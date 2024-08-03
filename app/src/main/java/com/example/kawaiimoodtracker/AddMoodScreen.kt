@@ -48,18 +48,8 @@ fun AddMoodScreen(modifier: Modifier = Modifier) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(42.dp)
     ) {
-        IconButton(
-            onClick = { /*TODO*/ },
-            modifier = modifier.align(Alignment.End)
-        ) {
-            Icon(
-                imageVector = Icons.Sharp.Close,
-                contentDescription = stringResource(id = R.string.close_addmoodscreen),
-                modifier = modifier.size(48.dp)
-            )
-        }
+
         Text(
             text = stringResource(id = R.string.how_are_you),
             textAlign = TextAlign.Center,
