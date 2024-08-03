@@ -209,53 +209,12 @@ fun AddedReason(modifier: Modifier = Modifier) {
     }
 }
 
-@Composable
-fun EmotionsGrid(modifier: Modifier = Modifier) {
-
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(4),
-        modifier = modifier
-            .size(339.dp)
-        ) {
-        items(24){ index ->
-            ExpressionButton()
-        }
-    }
-}
-
-
-@Composable
-fun ExpressionButton(modifier: Modifier = Modifier) {
-
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = "",
-            modifier = modifier
-                .padding(4.dp)
-                .clip(MaterialTheme.shapes.medium)
-                .clickable { }
-        )
-
-}
-
-@Preview (showBackground = true)
-@Composable
-private fun EmotionsGridPreview() {
-    EmotionsGrid()
-}
-
-@Preview (showBackground = true)
-@Composable
-private fun ExpressionButtonPreview() {
-    ExpressionButton()
-}
 
 @Preview (showBackground = true)
 @Composable
 private fun AddedReasonPreview() {
     AddedReason()
 }
-
 
 @Preview
 @Composable

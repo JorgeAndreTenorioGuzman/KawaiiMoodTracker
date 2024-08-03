@@ -1,6 +1,8 @@
 package com.example.kawaiimoodtracker
 
 import android.text.Layout
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.materialIcon
@@ -30,10 +34,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 
 import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -104,6 +110,67 @@ fun AddMoodScreen(modifier: Modifier = Modifier) {
           )
         }
     }
+}
+
+@Composable
+fun EmotionsGrid(modifier: Modifier = Modifier) {
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(4),
+        modifier = modifier
+            .size(339.dp)
+    ) {
+        items(24){ index ->
+            ExpressionButton()
+        }
+    }
+}
+
+
+@Composable
+fun ExpressionButton(modifier: Modifier = Modifier) {
+
+    Image(
+        painter = painterResource(id = R.drawable.ic_launcher_background),
+        contentDescription = "",
+        modifier = modifier
+            .padding(4.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .clickable { }
+    )
+}
+
+@Composable
+fun CancelButton(modifier: Modifier = Modifier) {
+
+    IconButton(onClick = { /*TODO*/ }) {
+        Icon(
+            imageVector = Icons.Sharp.Close,
+            contentDescription = "",
+            modifier = modifier
+                .size(48.dp)
+        )
+
+    }
+}
+
+@Preview (showBackground = true)
+@Composable
+private fun CancelButtonPreview() {
+    CancelButton()
+}
+
+
+@Preview (showBackground = true)
+@Composable
+private fun EmotionsGridPreview() {
+    EmotionsGrid()
+}
+
+@Preview (showBackground = true)
+@Composable
+private fun ExpressionButtonPreview() {
+    ExpressionButton()
 }
 
 @Preview (showBackground = true)
