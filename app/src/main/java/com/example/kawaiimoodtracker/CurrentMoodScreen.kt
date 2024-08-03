@@ -1,6 +1,8 @@
 package com.example.kawaiimoodtracker
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -153,14 +155,17 @@ fun ExpressionImage(modifier: Modifier = Modifier) {
         modifier = modifier
             .size(224.dp)
             .clip(MaterialTheme.shapes.medium)
-
+            .border(
+                width = 1.dp,
+                color = Color(0xFFA0A0A0),
+                shape = MaterialTheme.shapes.medium
+            ),
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
+            painter = painterResource(id = R.drawable.awesome_expression),
             modifier = modifier
                 .fillMaxSize()
                 .clip(MaterialTheme.shapes.medium),
-
             contentDescription = "Expression Image")
     }
 
@@ -185,19 +190,21 @@ fun RecordReason(modifier: Modifier = Modifier) {
             value = "",
             label = { Text(
                 text = "Add reason",
-                fontSize = 13.sp
+                fontSize = 13.sp,
+                color = Color(0xFF939393),
+
             )},
             onValueChange = {},
             modifier = Modifier
                 .width(212.dp)
-                .height(41.dp),
+                .height(41.dp)
+                .border(width = 1.dp, shape = MaterialTheme.shapes.medium, color = Color(0xFFA0A0A0)),
             shape = MaterialTheme.shapes.medium,
             colors = TextFieldDefaults.colors(
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
-                unfocusedContainerColor = Color(0xFFD9D9D9)
+                unfocusedContainerColor = Color.Transparent,
             ),
-
         )
         Spacer(modifier = modifier.width(4.dp))
         IconButton(
