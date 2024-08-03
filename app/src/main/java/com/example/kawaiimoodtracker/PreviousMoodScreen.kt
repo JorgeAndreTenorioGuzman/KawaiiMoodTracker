@@ -46,75 +46,107 @@ fun PreviousMoodScreen(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         //modifier = modifier.fillMaxSize()
     ) {
-        Row (modifier =  modifier.fillMaxWidth()){
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    imageVector = Icons.Sharp.ArrowBack,
-                    modifier = modifier
-                        .size(48.dp),
-                    contentDescription = "Back to calendar button")
-            }
-        }
+        //top back to calendar button
+        TopBackButton()
 
         Column (horizontalAlignment = Alignment.CenterHorizontally,){
 
-            Text(
-                text = "Quote",
-                modifier = modifier
-                    .width(271.dp),
-                textAlign = TextAlign.Center,
-                fontStyle = FontStyle.Italic
-            )
-            Spacer(modifier = modifier.height(16.dp))
-            Box(
-                modifier = modifier
-                    .size(224.dp)
-                    .clip(MaterialTheme.shapes.medium)
+            //Previous mood recorded quote
+            RecordedQuote()
 
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
-                    modifier = modifier
-                        .fillMaxSize()
-                        .clip(MaterialTheme.shapes.medium),
-
-                    contentDescription = "Expression Image")
-            }
-            Spacer(modifier = modifier.height(16.dp))
-            Text(
-                text = "Awesome",
-                fontSize = 24.sp,
-                modifier = modifier
-                    .width(187.dp)
-                    .height(39.dp),
-                textAlign = TextAlign.Center,
-            )
-
-            Text(
-                text = "July 29",
-                fontSize = 20.sp,
-                modifier = modifier
-                    .width(103.dp)
-                    .height(23.dp),
-                textAlign = TextAlign.Center,
-            )
-            Text(
-                text = "9:00 pm",
-                fontSize = 20.sp,
-                modifier = modifier
-                    .width(103.dp)
-                    .height(23.dp),
-                textAlign = TextAlign.Center,
-            )
             Spacer(modifier = modifier.height(16.dp))
 
-            Text(
-                text = "I went to watch a movie",
-            )
+            //image and text of emotion
+            MoodExpression()
+
+            Spacer(modifier = modifier.height(16.dp))
+
+            //Previous time and date of mood
+            DateTimePreviousMood()
+            
+            Spacer(modifier = modifier.height(16.dp))
+
+            //Previous mood reason
+            PreviousMoodReason()
 
         }
     }
 
+}
+
+@Composable
+fun PreviousMoodReason(modifier: Modifier = Modifier) {
+    Text(
+        text = "I went to watch a movie",
+    )
+}
+
+@Composable
+fun RecordedQuote(modifier: Modifier = Modifier) {
+    Text(
+        text = "Quote",
+        modifier = modifier
+            .width(271.dp),
+        textAlign = TextAlign.Center,
+        fontStyle = FontStyle.Italic
+    )
+}
+
+@Composable
+fun TopBackButton(modifier: Modifier = Modifier) {
+    Row (modifier =  modifier.fillMaxWidth()){
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(
+                imageVector = Icons.Sharp.ArrowBack,
+                modifier = modifier
+                    .size(48.dp),
+                contentDescription = "Back to calendar button")
+        }
+    }
+}
+@Composable
+fun DateTimePreviousMood(modifier: Modifier = Modifier) {
+    Text(
+        text = "July 29",
+        fontSize = 20.sp,
+        modifier = modifier
+            .width(103.dp)
+            .height(23.dp),
+        textAlign = TextAlign.Center,
+    )
+    Text(
+        text = "9:00 pm",
+        fontSize = 20.sp,
+        modifier = modifier
+            .width(103.dp)
+            .height(23.dp),
+        textAlign = TextAlign.Center,
+    )
+}
+@Composable
+fun MoodExpression(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .size(224.dp)
+            .clip(MaterialTheme.shapes.medium)
+
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_launcher_background),
+            modifier = modifier
+                .fillMaxSize()
+                .clip(MaterialTheme.shapes.medium),
+
+            contentDescription = "Expression Image")
+    }
+    Spacer(modifier = modifier.height(16.dp))
+    Text(
+        text = "Awesome",
+        fontSize = 24.sp,
+        modifier = modifier
+            .width(187.dp),
+        textAlign = TextAlign.Center,
+    )
 }
 
 @Preview (showBackground = true)
