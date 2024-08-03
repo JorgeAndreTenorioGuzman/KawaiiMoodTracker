@@ -15,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.ArrowBack
 import androidx.compose.material.icons.sharp.ArrowForward
 import androidx.compose.material.icons.sharp.Close
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -35,7 +34,7 @@ fun MoodCalendarScreen(modifier: Modifier = Modifier) {
 
     Column() {
         TopCloseButton(modifier = modifier.align(Alignment.End))
-        ScrollItemsBar()
+        ScrollMonthsBar()
         RecordedMonthMoods()
     }
 
@@ -63,7 +62,7 @@ fun RecordedMonthMoods(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ScrollItemsBar(modifier: Modifier = Modifier) {
+fun ScrollMonthsBar(modifier: Modifier = Modifier) {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -127,7 +126,7 @@ private fun DayRecordedMoodsPreview() {
 @Preview (showBackground = true)
 @Composable
 private fun ScrollItemsBarPreview() {
-    ScrollItemsBar()
+    ScrollMonthsBar()
 }
 
 @Preview (showBackground = true)
