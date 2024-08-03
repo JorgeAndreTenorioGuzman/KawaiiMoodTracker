@@ -1,9 +1,11 @@
 package com.example.kawaiimoodtracker
 
 import android.text.Layout
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +25,7 @@ import androidx.compose.material.icons.sharp.AddCircle
 import androidx.compose.material.icons.sharp.ArrowBack
 import androidx.compose.material.icons.sharp.Close
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -56,6 +59,7 @@ fun AddMoodScreen(modifier: Modifier = Modifier) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        //modifier = modifier.fillMaxSize()
     ) {
 
         CancelButton(modifier = Modifier.align(Alignment.End))
@@ -80,15 +84,20 @@ fun AddMoodScreen(modifier: Modifier = Modifier) {
 fun AddMoodButton(modifier: Modifier = Modifier) {
     Button(
         onClick = { /*TODO*/ },
-        enabled = false,
+        enabled = true,
         modifier = Modifier
             // .padding(24.dp)
             .height(46.dp)
-            .width(224.dp)
+            .width(224.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFFFFE1EC),
+        ),
+        border = BorderStroke(1.dp, color = Color(0xFF9F4666))
 
     ) {
         Text(
-            text = stringResource(id = R.string.AddButton)
+            text = stringResource(id = R.string.AddButton),
+            color = Color(0xFF9F4666)
         )
     }
 }
@@ -107,22 +116,28 @@ fun HowAreYouText(modifier: Modifier = Modifier) {
 
 @Composable
 fun ExpressionDisplay(modifier: Modifier = Modifier) {
+
     Button(
-        onClick = { /*TODO*/ },
-        shape = MaterialTheme.shapes.medium,
-        modifier = modifier
-            .width(224.dp)
-            .height(224.dp)
-
-
-    ) {
-        Icon(
-            imageVector = Icons.Sharp.AddCircle,
+            onClick = { /*TODO*/ },
+            shape = MaterialTheme.shapes.medium,
             modifier = modifier
-                .width(67.dp)
-                .height(61.dp),
-            contentDescription = stringResource(id = R.string.add_expression))
-    }
+                .width(224.dp)
+                .height(224.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFF6F6F6)
+            ),
+            border = BorderStroke(1.dp, color = Color(0xFFA0A0A0))
+        ) {
+            Icon(
+                imageVector = Icons.Sharp.AddCircle,
+                modifier = modifier
+                    .width(67.dp)
+                    .height(61.dp),
+                contentDescription = stringResource(id = R.string.add_expression),
+                tint = Color(0xFFFDBED4)
+            )
+        }
+
 }
 
 @Composable
@@ -145,7 +160,9 @@ fun NameFeelingTextField(modifier: Modifier = Modifier) {
     TextField(
         value = text,
         onValueChange = { text = it},
-        label = { Text(text = stringResource(id = R.string.name_feeling))},
+        label = { Text(
+            text = stringResource(id = R.string.name_feeling),
+        )},
         shape = MaterialTheme.shapes.medium,
         modifier = modifier
             .width(257.dp)
@@ -153,6 +170,8 @@ fun NameFeelingTextField(modifier: Modifier = Modifier) {
         colors = TextFieldDefaults.colors(
             unfocusedIndicatorColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,
+            focusedContainerColor = Color(0xFFD9D9D9),
+            unfocusedContainerColor = Color(0xFFD9D9D9)
         ),
 
 
