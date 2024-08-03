@@ -1,6 +1,7 @@
 package com.example.kawaiimoodtracker
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,7 +45,7 @@ fun PreviousMoodScreen(modifier: Modifier = Modifier) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        //modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         //top back to calendar button
         TopBackButton()
@@ -129,10 +130,15 @@ fun MoodExpression(modifier: Modifier = Modifier) {
         modifier = modifier
             .size(224.dp)
             .clip(MaterialTheme.shapes.medium)
+            .border(
+                width = 1.dp,
+                color = Color(0xFFA0A0A0),
+                shape = MaterialTheme.shapes.medium
+            ),
 
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
+            painter = painterResource(id = R.drawable.awesome_expression),
             modifier = modifier
                 .fillMaxSize()
                 .clip(MaterialTheme.shapes.medium),
