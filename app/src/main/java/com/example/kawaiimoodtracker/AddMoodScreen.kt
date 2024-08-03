@@ -3,6 +3,8 @@ package com.example.kawaiimoodtracker
 import android.text.Layout
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -143,13 +145,16 @@ fun ExpressionDisplay(modifier: Modifier = Modifier) {
 @Composable
 fun EmotionsGrid(modifier: Modifier = Modifier) {
 
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(4),
-        modifier = modifier
-            .size(339.dp)
-    ) {
-        items(24){ index ->
-            ExpressionButton()
+    Box(Modifier.background(color = Color(0xFFF6F6F6) )) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
+            modifier = modifier
+                .size(339.dp)
+                .padding(16.dp)
+        ) {
+            items(24){ index ->
+                ExpressionButton()
+            }
         }
     }
 }
@@ -182,12 +187,17 @@ fun NameFeelingTextField(modifier: Modifier = Modifier) {
 fun ExpressionButton(modifier: Modifier = Modifier) {
 
     Image(
-        painter = painterResource(id = R.drawable.ic_launcher_background),
+        painter = painterResource(id = R.drawable.awesome_expression),
         contentDescription = "",
         modifier = modifier
-            .padding(4.dp)
-            .clip(MaterialTheme.shapes.medium)
+            //.padding(4.dp)
+            //.clip(MaterialTheme.shapes.medium)
             .clickable { }
+            /*.border(
+                width = 1.dp,
+                color = Color(0xFFA0A0A0),
+                shape = MaterialTheme.shapes.medium
+            )*/
     )
 }
 

@@ -205,7 +205,6 @@ fun RecordReason(modifier: Modifier = Modifier) {
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
                 focusedContainerColor = Color(0xFFFDBED4)
-
             ),
         )
         Spacer(modifier = modifier.width(4.dp))
