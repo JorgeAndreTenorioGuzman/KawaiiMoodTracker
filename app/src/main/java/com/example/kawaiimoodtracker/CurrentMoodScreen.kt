@@ -48,7 +48,7 @@ fun CurrentMoodScreen(modifier: Modifier = Modifier) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(start = 48.dp, end = 48.dp, bottom = 48.dp)
+        modifier = modifier.padding(top = 16.dp, bottom = 48.dp)
     ) {
         Row (modifier =  modifier.fillMaxWidth()){
             IconButton(onClick = { /*TODO*/ }) {
@@ -130,6 +130,7 @@ fun CurrentMoodScreen(modifier: Modifier = Modifier) {
                     .height(23.dp),
                 textAlign = TextAlign.Center,
             )
+            Spacer(modifier = modifier.height(8.dp))
             Text(
                 text = "9:00 pm",
                 fontSize = 20.sp,
