@@ -34,23 +34,32 @@ import androidx.compose.ui.unit.sp
 fun MoodCalendarScreen(modifier: Modifier = Modifier) {
 
     Column() {
-        IconButton(onClick = { /*TODO*/ }, modifier.align(Alignment.End)) {
-            Icon(
-                imageVector = Icons.Sharp.Close,
-                modifier = modifier.size(48.dp),
-                contentDescription = ""
-            )
-        }
+        TopCloseButton(modifier = modifier.align(Alignment.End))
         ScrollItemsBar()
-        LazyColumn {
-            items(10){index ->
-                Spacer(modifier = modifier.height(24.dp))
-                DayRecordedMoods()
-            }
-        }
+        RecordedMonthMoods()
     }
 
 
+}
+
+@Composable
+fun TopCloseButton(modifier: Modifier = Modifier) {
+    IconButton(onClick = { /*TODO*/ },modifier = modifier) {
+        Icon(
+            imageVector = Icons.Sharp.Close,
+            modifier = modifier.size(48.dp),
+            contentDescription = ""
+        )
+    }
+}
+@Composable
+fun RecordedMonthMoods(modifier: Modifier = Modifier) {
+    LazyColumn {
+        items(10){index ->
+            Spacer(modifier = modifier.height(24.dp))
+            DayRecordedMoods()
+        }
+    }
 }
 
 @Composable
