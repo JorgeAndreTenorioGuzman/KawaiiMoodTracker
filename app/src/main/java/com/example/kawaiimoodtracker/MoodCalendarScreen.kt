@@ -2,6 +2,7 @@ package com.example.kawaiimoodtracker
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,22 +31,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun MoodCalendarScreen(modifier: Modifier = Modifier) {
+fun MoodCalendarScreen(navController: NavController, modifier: Modifier = Modifier) {
 
     Column() {
-        TopCloseButton(modifier = modifier.align(Alignment.End))
+        TopCloseButton(navController, modifier = modifier.align(Alignment.End))
         ScrollMonthsBar()
-        RecordedMonthMoods()
+        RecordedMonthMoods(navController = navController)
     }
 
 
 }
 
 @Composable
-fun TopCloseButton(modifier: Modifier = Modifier) {
-    IconButton(onClick = { /*TODO*/ },modifier = modifier) {
+fun TopCloseButton(navController: NavController, modifier: Modifier = Modifier) {
+    IconButton(
+        onClick = { navController.navigate("CurrentMoodScreen")},
+        modifier = modifier
+    ) {
         Icon(
             imageVector = Icons.Sharp.Close,
             modifier = modifier.size(48.dp),
@@ -54,11 +59,11 @@ fun TopCloseButton(modifier: Modifier = Modifier) {
     }
 }
 @Composable
-fun RecordedMonthMoods(modifier: Modifier = Modifier) {
+fun RecordedMonthMoods(navController: NavController, modifier: Modifier = Modifier) {
     LazyColumn {
         items(10){index ->
             Spacer(modifier = modifier.height(24.dp))
-            DayRecordedMoods()
+            DayRecordedMoods(navController = navController)
         }
     }
 }
@@ -92,7 +97,7 @@ fun ScrollMonthsBar(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun DayRecordedMoods(modifier: Modifier = Modifier) {
+fun DayRecordedMoods(navController: NavController, modifier: Modifier = Modifier) {
 
     Column {
         Text(
@@ -113,7 +118,9 @@ fun DayRecordedMoods(modifier: Modifier = Modifier) {
                                 width = 1.dp,
                                 color = Color(0xFFA0A0A0),
                                 shape = MaterialTheme.shapes.medium
-                            ),
+                            )
+                            .clickable { navController.navigate("PreviousMoodScreen") },
+
                         contentDescription = ""
                     )
                    Text(text = "Awesome")
@@ -127,7 +134,7 @@ fun DayRecordedMoods(modifier: Modifier = Modifier) {
 @Preview (showBackground = true)
 @Composable
 private fun DayRecordedMoodsPreview() {
-    DayRecordedMoods()
+    //DayRecordedMoods()
 }
 
 @Preview (showBackground = true)
@@ -139,5 +146,5 @@ private fun ScrollItemsBarPreview() {
 @Preview (showBackground = true)
 @Composable
 private fun MoodCalendarScreenPreview() {
-    MoodCalendarScreen()
+   // MoodCalendarScreen()
 }

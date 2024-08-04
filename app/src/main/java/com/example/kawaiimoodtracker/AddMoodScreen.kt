@@ -53,18 +53,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.kawaiimoodtracker.ui.theme.KawaiiMoodTrackerTheme
 
 @Composable
-fun AddMoodScreen(modifier: Modifier = Modifier) {
+fun AddMoodScreen(navController: NavController, modifier: Modifier = Modifier) {
 
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        //modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
 
-        CancelButton(modifier = Modifier.align(Alignment.End))
+        CancelButton(navController, modifier = Modifier.align(Alignment.End))
 
         HowAreYouText()
 
@@ -118,7 +119,6 @@ fun HowAreYouText(modifier: Modifier = Modifier) {
 
 @Composable
 fun ExpressionDisplay(modifier: Modifier = Modifier) {
-
     Button(
             onClick = { /*TODO*/ },
             shape = MaterialTheme.shapes.medium,
@@ -139,6 +139,7 @@ fun ExpressionDisplay(modifier: Modifier = Modifier) {
                 tint = Color(0xFFFDBED4)
             )
         }
+
 
 }
 
@@ -202,9 +203,12 @@ fun ExpressionButton(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CancelButton(modifier: Modifier = Modifier) {
+fun CancelButton(navController: NavController, modifier: Modifier = Modifier) {
 
-        IconButton(onClick = { /*TODO*/ }, modifier = modifier) {
+        IconButton(
+            onClick = { navController.navigate("CurrentMoodScreen") },
+            modifier = modifier
+        ) {
             Icon(
                 imageVector = Icons.Sharp.Close,
                 modifier = modifier.size(48.dp),
@@ -217,7 +221,7 @@ fun CancelButton(modifier: Modifier = Modifier) {
 @Preview (showBackground = true)
 @Composable
 private fun CancelButtonPreview() {
-    CancelButton()
+    //CancelButton()
 }
 
 
@@ -237,6 +241,6 @@ private fun ExpressionButtonPreview() {
 @Composable
 private fun AddMoodScreenPreview() {
    KawaiiMoodTrackerTheme {
-       AddMoodScreen()
+       //AddMoodScreen()
    }
 }

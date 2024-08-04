@@ -27,5 +27,5 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App(modifier: Modifier = Modifier) {
-
+    KawaiiMoodApp()
 }

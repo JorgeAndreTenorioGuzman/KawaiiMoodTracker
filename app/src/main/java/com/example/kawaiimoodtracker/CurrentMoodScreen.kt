@@ -38,9 +38,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @Composable
-fun CurrentMoodScreen(modifier: Modifier = Modifier) {
+fun CurrentMoodScreen(navController: NavHostController, modifier: Modifier = Modifier) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -50,7 +51,7 @@ fun CurrentMoodScreen(modifier: Modifier = Modifier) {
     ) {
 
         //top bar buttons
-        TopBarButtons()
+        TopBarButtons(navController = navController)
 
         //quote generator
         QuoteGenerator()
@@ -96,9 +97,11 @@ fun DateTimeMood(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TopBarButtons(modifier: Modifier = Modifier) {
+fun TopBarButtons(navController: NavHostController, modifier: Modifier = Modifier) {
     Row (modifier =  modifier.fillMaxWidth()){
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(
+            onClick = { navController.navigate("MoodCalendarScreen")},
+        ) {
             Icon(
                 imageVector = Icons.Sharp.DateRange,
                 modifier = modifier
@@ -106,7 +109,9 @@ fun TopBarButtons(modifier: Modifier = Modifier) {
                 contentDescription = "Mood Calendar Button")
         }
         Spacer(modifier = Modifier.weight(1f))
-        IconButton(onClick = { /*TODO*/}) {
+        IconButton(
+            onClick = {navController.navigate("AddMoodScreen")},
+        ) {
             Icon(
                 imageVector = Icons.Sharp.AddCircle,
                 modifier = modifier
@@ -260,5 +265,5 @@ private fun RecordReasonPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun CurrentMoodScreenPreview() {
-    CurrentMoodScreen()
+   // CurrentMoodScreen()
 }

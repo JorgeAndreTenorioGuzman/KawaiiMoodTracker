@@ -38,17 +38,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.kawaiimoodtracker.ui.theme.KawaiiMoodTrackerTheme
 
 @Composable
-fun PreviousMoodScreen(modifier: Modifier = Modifier) {
+fun PreviousMoodScreen(navController: NavController, modifier: Modifier = Modifier) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxSize()
     ) {
         //top back to calendar button
-        TopBackButton()
+        TopBackButton(navController)
 
         Column (horizontalAlignment = Alignment.CenterHorizontally,){
 
@@ -94,9 +95,9 @@ fun RecordedQuote(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TopBackButton(modifier: Modifier = Modifier) {
-    Row (modifier =  modifier.fillMaxWidth()){
-        IconButton(onClick = { /*TODO*/ }) {
+fun TopBackButton(navController: NavController, modifier: Modifier = Modifier) {
+    Row (modifier = modifier.fillMaxWidth()){
+        IconButton(onClick = { navController.navigate("MoodCalendarScreen")}) {
             Icon(
                 imageVector = Icons.Sharp.ArrowBack,
                 modifier = modifier
@@ -159,6 +160,6 @@ fun MoodExpression(modifier: Modifier = Modifier) {
 @Composable
 private fun PreviousMoodScreenPreview() {
     KawaiiMoodTrackerTheme {
-        PreviousMoodScreen()
+        //PreviousMoodScreen()
     }
 }
