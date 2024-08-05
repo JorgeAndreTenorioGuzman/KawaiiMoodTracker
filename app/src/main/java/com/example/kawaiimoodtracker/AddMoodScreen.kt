@@ -1,30 +1,22 @@
 package com.example.kawaiimoodtracker
 
-import android.text.Layout
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.materialIcon
-import androidx.compose.material.icons.sharp.Add
 import androidx.compose.material.icons.sharp.AddCircle
-import androidx.compose.material.icons.sharp.ArrowBack
 import androidx.compose.material.icons.sharp.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -43,10 +35,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.ColorFilter
 
-import androidx.compose.ui.layout.VerticalAlignmentLine
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -58,6 +48,7 @@ import com.example.kawaiimoodtracker.ui.theme.KawaiiMoodTrackerTheme
 
 @Composable
 fun AddMoodScreen(navController: NavController, modifier: Modifier = Modifier) {
+
 
 
     Column(
@@ -119,8 +110,11 @@ fun HowAreYouText(modifier: Modifier = Modifier) {
 
 @Composable
 fun ExpressionDisplay(modifier: Modifier = Modifier) {
+    var showImageSelector by remember { mutableStateOf(false) }
+    var selectedImageRes by remember { mutableStateOf(R.drawable.ic_launcher_background) }
+
     Button(
-            onClick = { /*TODO*/ },
+            onClick = { showImageSelector = true},
             shape = MaterialTheme.shapes.medium,
             modifier = modifier
                 .width(224.dp)
@@ -130,21 +124,37 @@ fun ExpressionDisplay(modifier: Modifier = Modifier) {
             ),
             border = BorderStroke(1.dp, color = Color(0xFFA0A0A0))
         ) {
-            Icon(
-                imageVector = Icons.Sharp.AddCircle,
+            Image(
+                painter = painterResource(id = selectedImageRes),
                 modifier = modifier
                     .width(67.dp)
                     .height(61.dp),
                 contentDescription = stringResource(id = R.string.add_expression),
-                tint = Color(0xFFFDBED4)
+                //colorFilter =  ColorFilter.tint(Color(0xFFFDBED4))
             )
         }
+
+    if (showImageSelector){
+        EmotionsGrid(
+            //selectedImageRes = selectedImageRes,
+            onImageSelected = { imageRes ->
+                selectedImageRes = imageRes
+                showImageSelector = false
+            }
+        )
+    }
 
 
 }
 
+@Preview
 @Composable
-fun EmotionsGrid(modifier: Modifier = Modifier) {
+private fun ExpressionDisplayPreview() {
+    ExpressionDisplay()
+}
+
+@Composable
+fun EmotionsGrid(onImageSelected: (Int) -> Unit, modifier: Modifier = Modifier) {
 
     Box(Modifier.background(color = Color(0xFFF6F6F6) )) {
         LazyVerticalGrid(
@@ -154,7 +164,9 @@ fun EmotionsGrid(modifier: Modifier = Modifier) {
                 .padding(16.dp)
         ) {
             items(24){ index ->
-                ExpressionButton()
+                ExpressionButton(
+                    onImageSelected = onImageSelected
+                )
             }
         }
     }
@@ -185,7 +197,7 @@ fun NameFeelingTextField(modifier: Modifier = Modifier) {
     )
 }
 @Composable
-fun ExpressionButton(modifier: Modifier = Modifier) {
+fun ExpressionButton(onImageSelected: (Int) -> Unit, modifier: Modifier = Modifier) {
 
     Image(
         painter = painterResource(id = R.drawable.awesome_expression),
@@ -193,7 +205,7 @@ fun ExpressionButton(modifier: Modifier = Modifier) {
         modifier = modifier
             .padding(4.dp)
             .clip(MaterialTheme.shapes.medium)
-            .clickable { }
+            .clickable {onImageSelected(R.drawable.awesome_expression)  }
             .border(
                 width = 1.dp,
                 color = Color(0xFFA0A0A0),
@@ -228,13 +240,13 @@ private fun CancelButtonPreview() {
 @Preview (showBackground = true)
 @Composable
 private fun EmotionsGridPreview() {
-    EmotionsGrid()
+    //EmotionsGrid()
 }
 
 @Preview (showBackground = true)
 @Composable
 private fun ExpressionButtonPreview() {
-    ExpressionButton()
+   // ExpressionButton()
 }
 
 @Preview (showBackground = true)
