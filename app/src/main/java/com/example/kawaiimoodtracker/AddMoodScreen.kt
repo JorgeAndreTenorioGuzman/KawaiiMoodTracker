@@ -127,8 +127,9 @@ fun ExpressionDisplay(modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(id = selectedImageRes),
                 modifier = modifier
-                    .width(67.dp)
-                    .height(61.dp),
+                    .fillMaxSize(),
+//                    .width(67.dp)
+//                    .height(61.dp),
                 contentDescription = stringResource(id = R.string.add_expression),
                 //colorFilter =  ColorFilter.tint(Color(0xFFFDBED4))
             )
@@ -136,6 +137,7 @@ fun ExpressionDisplay(modifier: Modifier = Modifier) {
 
     if (showImageSelector){
         EmotionsGrid(
+            images = images,
             //selectedImageRes = selectedImageRes,
             onImageSelected = { imageRes ->
                 selectedImageRes = imageRes
@@ -153,8 +155,14 @@ private fun ExpressionDisplayPreview() {
     ExpressionDisplay()
 }
 
+val images = listOf(
+    R.drawable.awesome_expression,
+    R.drawable.ic_launcher_background,
+    R.drawable.ic_launcher_foreground
+)
+
 @Composable
-fun EmotionsGrid(onImageSelected: (Int) -> Unit, modifier: Modifier = Modifier) {
+fun EmotionsGrid(images: List<Int>, onImageSelected: (Int) -> Unit, modifier: Modifier = Modifier) {
 
     Box(Modifier.background(color = Color(0xFFF6F6F6) )) {
         LazyVerticalGrid(
@@ -163,8 +171,9 @@ fun EmotionsGrid(onImageSelected: (Int) -> Unit, modifier: Modifier = Modifier) 
                 .size(339.dp)
                 .padding(16.dp)
         ) {
-            items(24){ index ->
+            items(images.size){ index ->
                 ExpressionButton(
+                    imagesRes = images[index],
                     onImageSelected = onImageSelected
                 )
             }
@@ -197,15 +206,15 @@ fun NameFeelingTextField(modifier: Modifier = Modifier) {
     )
 }
 @Composable
-fun ExpressionButton(onImageSelected: (Int) -> Unit, modifier: Modifier = Modifier) {
+fun ExpressionButton(imagesRes: Int, onImageSelected: (Int) -> Unit, modifier: Modifier = Modifier) {
 
     Image(
-        painter = painterResource(id = R.drawable.awesome_expression),
+        painter = painterResource(id = imagesRes),
         contentDescription = "",
         modifier = modifier
             .padding(4.dp)
             .clip(MaterialTheme.shapes.medium)
-            .clickable {onImageSelected(R.drawable.awesome_expression)  }
+            .clickable {onImageSelected(imagesRes)  }
             .border(
                 width = 1.dp,
                 color = Color(0xFFA0A0A0),
