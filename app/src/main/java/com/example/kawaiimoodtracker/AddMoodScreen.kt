@@ -156,9 +156,30 @@ private fun ExpressionDisplayPreview() {
 }
 
 val images = listOf(
-    R.drawable.awesome_expression,
-    R.drawable.ic_launcher_background,
-    R.drawable.ic_launcher_foreground
+    R.drawable.expression_1,
+    R.drawable.expression_2,
+    R.drawable.expression_3,
+    R.drawable.expression_4,
+    R.drawable.expression_5,
+    R.drawable.expression_6,
+    R.drawable.expression_7,
+    R.drawable.expression_8,
+    R.drawable.expression_9,
+    R.drawable.expression_10,
+    R.drawable.expression_11,
+    R.drawable.expression_12,
+    R.drawable.expression_13,
+    R.drawable.expression_14,
+    R.drawable.expression_15,
+    R.drawable.expression_16,
+    R.drawable.expression_17,
+    R.drawable.expression_18,
+    R.drawable.expression_19,
+    R.drawable.expression_20,
+    R.drawable.expression_21,
+    R.drawable.expression_22,
+    R.drawable.expression_23,
+    R.drawable.expression_24
 )
 
 @Composable
