@@ -51,7 +51,8 @@ fun CurrentMoodScreen(
 ) {
 
     val moodEntries = moodViewModel.moodStateHolder.moodEntires
-    val mustRecentMood = moodEntries.first()
+
+    val mustRecentMood = moodEntries.last()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
