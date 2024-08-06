@@ -48,9 +48,38 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.example.kawaiimoodtracker.ui.theme.KawaiiMoodTrackerTheme
 
+val images = listOf(
+    R.drawable.expression_1,
+    R.drawable.expression_2,
+    R.drawable.expression_3,
+    R.drawable.expression_4,
+    R.drawable.expression_5,
+    R.drawable.expression_6,
+    R.drawable.expression_7,
+    R.drawable.expression_8,
+    R.drawable.expression_9,
+    R.drawable.expression_10,
+    R.drawable.expression_11,
+    R.drawable.expression_12,
+    R.drawable.expression_13,
+    R.drawable.expression_14,
+    R.drawable.expression_15,
+    R.drawable.expression_16,
+    R.drawable.expression_17,
+    R.drawable.expression_18,
+    R.drawable.expression_19,
+    R.drawable.expression_20,
+    R.drawable.expression_21,
+    R.drawable.expression_22,
+    R.drawable.expression_23,
+    R.drawable.expression_24
+)
+
 @Composable
 fun AddMoodScreen(navController: NavController, modifier: Modifier = Modifier) {
 
+    var showImageSelector by remember { mutableStateOf(false) }
+    var selectedImageRes by remember { mutableStateOf(R.drawable.ic_launcher_background) }
 
 
     Column(
@@ -64,7 +93,20 @@ fun AddMoodScreen(navController: NavController, modifier: Modifier = Modifier) {
 
         HowAreYouText()
 
-        ExpressionDisplay()
+
+        ExpressionDisplay(
+            images = images,
+            //selectedImageRes = selectedImageRes,
+            onImageSelected = { imageRes ->
+                selectedImageRes = imageRes
+                showImageSelector = false
+            },
+            showImageSelector = showImageSelector,
+            onShowImageSelector =  {showImageSelector = true},
+            selectedImageRes = selectedImageRes
+        )
+
+
 
         Spacer(modifier = modifier.height(16.dp))
 
@@ -114,12 +156,17 @@ fun HowAreYouText(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ExpressionDisplay(modifier: Modifier = Modifier) {
-    var showImageSelector by remember { mutableStateOf(false) }
-    var selectedImageRes by remember { mutableStateOf(R.drawable.ic_launcher_background) }
+fun ExpressionDisplay(
+    images: List<Int>,
+    onImageSelected: (Int) -> Unit,
+    showImageSelector:Boolean,
+    onShowImageSelector: () -> Unit,
+    selectedImageRes:Int,
+    modifier: Modifier = Modifier
+) {
 
     Button(
-            onClick = { showImageSelector = true},
+            onClick = onShowImageSelector,
             shape = MaterialTheme.shapes.medium,
             modifier = modifier
                 .width(224.dp)
@@ -143,11 +190,7 @@ fun ExpressionDisplay(modifier: Modifier = Modifier) {
     if (showImageSelector){
         EmotionsGrid(
             images = images,
-            //selectedImageRes = selectedImageRes,
-            onImageSelected = { imageRes ->
-                selectedImageRes = imageRes
-                showImageSelector = false
-            }
+            onImageSelected = onImageSelected
         )
     }
 
@@ -157,35 +200,10 @@ fun ExpressionDisplay(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun ExpressionDisplayPreview() {
-    ExpressionDisplay()
+   // ExpressionDisplay()
 }
 
-val images = listOf(
-    R.drawable.expression_1,
-    R.drawable.expression_2,
-    R.drawable.expression_3,
-    R.drawable.expression_4,
-    R.drawable.expression_5,
-    R.drawable.expression_6,
-    R.drawable.expression_7,
-    R.drawable.expression_8,
-    R.drawable.expression_9,
-    R.drawable.expression_10,
-    R.drawable.expression_11,
-    R.drawable.expression_12,
-    R.drawable.expression_13,
-    R.drawable.expression_14,
-    R.drawable.expression_15,
-    R.drawable.expression_16,
-    R.drawable.expression_17,
-    R.drawable.expression_18,
-    R.drawable.expression_19,
-    R.drawable.expression_20,
-    R.drawable.expression_21,
-    R.drawable.expression_22,
-    R.drawable.expression_23,
-    R.drawable.expression_24
-)
+
 
 @Composable
 fun EmotionsGrid(images: List<Int>, onImageSelected: (Int) -> Unit, modifier: Modifier = Modifier) {
