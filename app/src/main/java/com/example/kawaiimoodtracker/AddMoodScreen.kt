@@ -43,6 +43,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.example.kawaiimoodtracker.ui.theme.KawaiiMoodTrackerTheme
 
@@ -185,18 +187,20 @@ val images = listOf(
 @Composable
 fun EmotionsGrid(images: List<Int>, onImageSelected: (Int) -> Unit, modifier: Modifier = Modifier) {
 
-    Box(Modifier.background(color = Color(0xFFF6F6F6) )) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(4),
-            modifier = modifier
-                .size(339.dp)
-                .padding(16.dp)
-        ) {
-            items(images.size){ index ->
-                ExpressionButton(
-                    imagesRes = images[index],
-                    onImageSelected = onImageSelected
-                )
+    Dialog (onDismissRequest = {}) {
+        Box(Modifier.background(color = Color(0xFFF6F6F6) )) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(4),
+                modifier = modifier
+                    .size(339.dp)
+                    .padding(16.dp)
+            ) {
+                items(images.size){ index ->
+                    ExpressionButton(
+                        imagesRes = images[index],
+                        onImageSelected = onImageSelected
+                    )
+                }
             }
         }
     }
@@ -221,8 +225,6 @@ fun NameFeelingTextField(modifier: Modifier = Modifier) {
             focusedContainerColor = Color(0xFFD9D9D9),
             unfocusedContainerColor = Color(0xFFD9D9D9)
         ),
-
-
 
     )
 }
