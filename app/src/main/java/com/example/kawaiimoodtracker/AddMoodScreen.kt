@@ -58,6 +58,8 @@ fun AddMoodScreen(navController: NavController, modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize()
     ) {
 
+        Spacer(modifier = modifier.height(32.dp))
+
         CancelButton(navController, modifier = Modifier.align(Alignment.End))
 
         HowAreYouText()
@@ -79,7 +81,7 @@ fun AddMoodScreen(navController: NavController, modifier: Modifier = Modifier) {
 @Composable
 fun AddMoodButton(modifier: Modifier = Modifier) {
     Button(
-        onClick = { /*TODO*/ },
+        onClick = { /*TODO: On click save current data, update current screen, and navigate to current screen*/ },
         enabled = true,
         modifier = Modifier
             // .padding(24.dp)
@@ -97,6 +99,7 @@ fun AddMoodButton(modifier: Modifier = Modifier) {
         )
     }
 }
+
 @Composable
 fun HowAreYouText(modifier: Modifier = Modifier) {
     Text(
@@ -228,6 +231,12 @@ fun NameFeelingTextField(modifier: Modifier = Modifier) {
 
     )
 }
+
+@Preview
+@Composable
+private fun NameFeelingTextFieldPreview() {
+    NameFeelingTextField()
+}
 @Composable
 fun ExpressionButton(imagesRes: Int, onImageSelected: (Int) -> Unit, modifier: Modifier = Modifier) {
 
@@ -237,7 +246,7 @@ fun ExpressionButton(imagesRes: Int, onImageSelected: (Int) -> Unit, modifier: M
         modifier = modifier
             .padding(4.dp)
             .clip(MaterialTheme.shapes.medium)
-            .clickable {onImageSelected(imagesRes)  }
+            .clickable { onImageSelected(imagesRes) }
             .border(
                 width = 1.dp,
                 color = Color(0xFFA0A0A0),
