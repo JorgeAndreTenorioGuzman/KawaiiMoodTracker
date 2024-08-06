@@ -1,5 +1,7 @@
 package com.example.kawaiimoodtracker
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -76,6 +78,7 @@ val images = listOf(
     R.drawable.expression_24
 )
 
+
 @Composable
 fun AddMoodScreen(
     navController: NavController,
@@ -118,16 +121,16 @@ fun AddMoodScreen(
 
         Spacer(modifier = modifier.height(16.dp))
 
-        AddMoodButton()
+        AddMoodButton(onClickAddMood = { moodViewModel.addMoodEntry()})
 
 
     }
 }
 
 @Composable
-fun AddMoodButton(modifier: Modifier = Modifier) {
+fun AddMoodButton(onClickAddMood: () -> Unit, modifier: Modifier = Modifier) {
     Button(
-        onClick = { /*TODO: On click save current states, update current screen with that data, and navigate to current screen*/ },
+        onClick = onClickAddMood,
         enabled = true,
         modifier = Modifier
             // .padding(24.dp)

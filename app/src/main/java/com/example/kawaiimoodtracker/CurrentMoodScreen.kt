@@ -38,11 +38,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
-fun CurrentMoodScreen(navController: NavHostController, modifier: Modifier = Modifier) {
+fun CurrentMoodScreen(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    moodViewModel: MoodViewModel = viewModel()
+) {
 
+    val moodEntries = moodViewModel.moodStateHolder.moodEntires
+    val mustRecentMood = moodEntries.first()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -59,12 +68,12 @@ fun CurrentMoodScreen(navController: NavHostController, modifier: Modifier = Mod
         Spacer(modifier = modifier.height(16.dp))
 
         //image
-        ExpressionImage()
+        ExpressionImage(mustRecentMood)
 
         Spacer(modifier = modifier.height(16.dp))
 
        //date and time
-        DateTimeMood()
+        DateTimeMood(mustRecentMood)
         
         Spacer(modifier = modifier.height(16.dp))
 
@@ -77,9 +86,15 @@ fun CurrentMoodScreen(navController: NavHostController, modifier: Modifier = Mod
 }
 
 @Composable
-fun DateTimeMood(modifier: Modifier = Modifier) {
+fun DateTimeMood(mustRecentMood: MoodEntry,modifier: Modifier = Modifier) {
+
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+    val dateString = dateFormat.format(mustRecentMood.dateTime)
+    val timeString = timeFormat.format(mustRecentMood.dateTime)
+
     Text(
-        text = "July 29",
+        text = dateString,
         fontSize = 20.sp,
         modifier = modifier
             .width(103.dp),
@@ -87,7 +102,7 @@ fun DateTimeMood(modifier: Modifier = Modifier) {
     )
     Spacer(modifier = modifier.height(8.dp))
     Text(
-        text = "9:00 pm",
+        text = timeString,
         fontSize = 20.sp,
         modifier = modifier
             .width(103.dp)
@@ -155,7 +170,7 @@ fun QuoteGenerator(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ExpressionImage(modifier: Modifier = Modifier) {
+fun ExpressionImage(mustRecentMood: MoodEntry, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .size(224.dp)
@@ -167,7 +182,7 @@ fun ExpressionImage(modifier: Modifier = Modifier) {
             ),
     ) {
         Image(
-            painter = painterResource(id = R.drawable.awesome_expression),
+            painter = painterResource(id = mustRecentMood.selectedImagesRes),
             modifier = modifier
                 .fillMaxSize()
                 .clip(MaterialTheme.shapes.medium),
@@ -177,7 +192,7 @@ fun ExpressionImage(modifier: Modifier = Modifier) {
     Spacer(modifier = modifier.height(16.dp))
 
     Text(
-        text = "Awesome",
+        text = mustRecentMood.feelingName,
         fontSize = 24.sp,
         modifier = modifier
             .width(187.dp),
@@ -203,7 +218,11 @@ fun RecordReason(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .width(212.dp)
                 .height(41.dp)
-                .border(width = 1.dp, shape = MaterialTheme.shapes.medium, color = Color(0xFFA0A0A0)),
+                .border(
+                    width = 1.dp,
+                    shape = MaterialTheme.shapes.medium,
+                    color = Color(0xFFA0A0A0)
+                ),
             shape = MaterialTheme.shapes.medium,
             colors = TextFieldDefaults.colors(
                 unfocusedIndicatorColor = Color.Transparent,

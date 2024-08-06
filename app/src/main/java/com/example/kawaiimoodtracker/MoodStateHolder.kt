@@ -8,4 +8,7 @@ class MoodStateHolder{
     var showImageSelector by mutableStateOf(false)
     var selectedImageRes by mutableStateOf(R.drawable.ic_launcher_background)
     var text by mutableStateOf("")
+    var moodEntires by mutableStateOf<List<MoodEntry>>(emptyList())
+
 }
+
