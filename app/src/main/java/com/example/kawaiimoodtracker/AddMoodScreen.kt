@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.kawaiimoodtracker.ui.theme.KawaiiMoodTrackerTheme
 
@@ -76,12 +77,13 @@ val images = listOf(
 )
 
 @Composable
-fun AddMoodScreen(navController: NavController, modifier: Modifier = Modifier) {
+fun AddMoodScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    moodViewModel: MoodViewModel = viewModel()
+) {
 
-    var showImageSelector by remember { mutableStateOf(false) }
-    var selectedImageRes by remember { mutableStateOf(R.drawable.ic_launcher_background) }
-    var text by remember { mutableStateOf("") }
-
+   val moodStateHolder = moodViewModel.moodStateHolder
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -98,19 +100,21 @@ fun AddMoodScreen(navController: NavController, modifier: Modifier = Modifier) {
         ExpressionDisplay(
             images = images,
             onImageSelected = { imageRes ->
-                selectedImageRes = imageRes
-                showImageSelector = false
+                moodStateHolder.selectedImageRes = imageRes
+                moodStateHolder.showImageSelector = false
             },
-            showImageSelector = showImageSelector,
-            onShowImageSelector =  {showImageSelector = true},
-            selectedImageRes = selectedImageRes
+            showImageSelector = moodStateHolder.showImageSelector,
+            onShowImageSelector =  {moodStateHolder.showImageSelector = true},
+            selectedImageRes = moodStateHolder.selectedImageRes
         )
 
 
 
         Spacer(modifier = modifier.height(16.dp))
 
-        NameFeelingTextField(text = text, onTextChange = {text = it})
+        NameFeelingTextField(
+            text = moodStateHolder.text,
+            onTextChange = {moodStateHolder.text = it})
 
         Spacer(modifier = modifier.height(16.dp))
 
