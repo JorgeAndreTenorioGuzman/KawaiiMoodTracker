@@ -80,6 +80,7 @@ fun AddMoodScreen(navController: NavController, modifier: Modifier = Modifier) {
 
     var showImageSelector by remember { mutableStateOf(false) }
     var selectedImageRes by remember { mutableStateOf(R.drawable.ic_launcher_background) }
+    var text by remember { mutableStateOf("") }
 
 
     Column(
@@ -96,7 +97,6 @@ fun AddMoodScreen(navController: NavController, modifier: Modifier = Modifier) {
 
         ExpressionDisplay(
             images = images,
-            //selectedImageRes = selectedImageRes,
             onImageSelected = { imageRes ->
                 selectedImageRes = imageRes
                 showImageSelector = false
@@ -110,20 +110,20 @@ fun AddMoodScreen(navController: NavController, modifier: Modifier = Modifier) {
 
         Spacer(modifier = modifier.height(16.dp))
 
-        NameFeelingTextField()
+        NameFeelingTextField(text = text, onTextChange = {text = it})
 
         Spacer(modifier = modifier.height(16.dp))
 
         AddMoodButton()
 
-        
+
     }
 }
 
 @Composable
 fun AddMoodButton(modifier: Modifier = Modifier) {
     Button(
-        onClick = { /*TODO: On click save current data, update current screen, and navigate to current screen*/ },
+        onClick = { /*TODO: On click save current states, update current screen with that data, and navigate to current screen*/ },
         enabled = true,
         modifier = Modifier
             // .padding(24.dp)
@@ -228,11 +228,11 @@ fun EmotionsGrid(images: List<Int>, onImageSelected: (Int) -> Unit, modifier: Mo
 }
 
 @Composable
-fun NameFeelingTextField(modifier: Modifier = Modifier) {
-    var text by remember { mutableStateOf("") }
+fun NameFeelingTextField(text: String, onTextChange: (String) -> Unit, modifier: Modifier = Modifier) {
+
     TextField(
         value = text,
-        onValueChange = { text = it},
+        onValueChange = onTextChange,
         label = { Text(
             text = stringResource(id = R.string.name_feeling),
         )},
@@ -246,14 +246,13 @@ fun NameFeelingTextField(modifier: Modifier = Modifier) {
             focusedContainerColor = Color(0xFFD9D9D9),
             unfocusedContainerColor = Color(0xFFD9D9D9)
         ),
-
     )
 }
 
 @Preview
 @Composable
 private fun NameFeelingTextFieldPreview() {
-    NameFeelingTextField()
+    //NameFeelingTextField()
 }
 @Composable
 fun ExpressionButton(imagesRes: Int, onImageSelected: (Int) -> Unit, modifier: Modifier = Modifier) {
