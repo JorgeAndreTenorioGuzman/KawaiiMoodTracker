@@ -28,6 +28,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,12 +50,16 @@ import java.util.Locale
 fun CurrentMoodScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    moodViewModel: MoodViewModel = viewModel()
+    moodViewModel: MoodViewModel
 ) {
 
-    val moodEntries = moodViewModel.moodStateHolder.moodEntires
+    val moodEntries by moodViewModel.moodStateHolder.moodEntries.observeAsState(emptyList())
+    val mostRecentMood = moodEntries.lastOrNull()
 
-    val mustRecentMood = moodEntries.last()
+    LaunchedEffect(moodEntries) {
+        println("Mood entries updated: $moodEntries")
+    }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -69,12 +76,16 @@ fun CurrentMoodScreen(
         Spacer(modifier = modifier.height(16.dp))
 
         //image
-        ExpressionImage(mustRecentMood)
+        if (mostRecentMood != null) {
+            ExpressionImage(mostRecentMood)
+        }
 
         Spacer(modifier = modifier.height(16.dp))
 
        //date and time
-        DateTimeMood(mustRecentMood)
+        if (mostRecentMood != null) {
+            DateTimeMood(mostRecentMood)
+        }
         
         Spacer(modifier = modifier.height(16.dp))
 

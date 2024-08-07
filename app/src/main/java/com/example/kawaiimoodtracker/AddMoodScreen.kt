@@ -1,6 +1,7 @@
 package com.example.kawaiimoodtracker
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -30,6 +31,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -83,10 +85,15 @@ val images = listOf(
 fun AddMoodScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    moodViewModel: MoodViewModel = viewModel()
+    moodViewModel: MoodViewModel
 ) {
 
-   val moodStateHolder = moodViewModel.moodStateHolder
+    val moodStateHolder = moodViewModel.moodStateHolder
+    val selectedImageRes by moodStateHolder.selectedImageRes.observeAsState(R.drawable.ic_launcher_background)
+    val text by moodStateHolder.text.observeAsState("")
+
+    Log.d("AddMoodScreen", "SelectedImageRes: $selectedImageRes")
+    Log.d("AddMoodScreen", "Text: $text")
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -103,12 +110,12 @@ fun AddMoodScreen(
         ExpressionDisplay(
             images = images,
             onImageSelected = { imageRes ->
-                moodStateHolder.selectedImageRes = imageRes
+                moodStateHolder.setSelectedImageRes(imageRes)
                 moodStateHolder.showImageSelector = false
             },
             showImageSelector = moodStateHolder.showImageSelector,
             onShowImageSelector =  {moodStateHolder.showImageSelector = true},
-            selectedImageRes = moodStateHolder.selectedImageRes
+            selectedImageRes = selectedImageRes
         )
 
 
@@ -116,21 +123,24 @@ fun AddMoodScreen(
         Spacer(modifier = modifier.height(16.dp))
 
         NameFeelingTextField(
-            text = moodStateHolder.text,
-            onTextChange = {moodStateHolder.text = it})
+            text = text,
+            onTextChange = {moodStateHolder.setText(it)})
 
         Spacer(modifier = modifier.height(16.dp))
 
-        AddMoodButton(onClickAddMood = { moodViewModel.addMoodEntry()})
+        AddMoodButton(navController,onClickAddMood = {moodViewModel.addMoodEntry()})
 
 
     }
 }
 
 @Composable
-fun AddMoodButton(onClickAddMood: () -> Unit, modifier: Modifier = Modifier) {
+fun AddMoodButton(navController: NavController, onClickAddMood: () -> Unit, modifier: Modifier = Modifier) {
     Button(
-        onClick = onClickAddMood,
+        onClick = {
+            onClickAddMood()
+            navController.navigate("CurrentMoodScreen")
+        },
         enabled = true,
         modifier = Modifier
             // .padding(24.dp)
