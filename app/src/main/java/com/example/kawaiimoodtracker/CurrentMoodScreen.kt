@@ -56,6 +56,7 @@ fun CurrentMoodScreen(
     val moodEntries by moodViewModel.moodStateHolder.moodEntries.observeAsState(emptyList())
     val mostRecentMood = moodEntries.lastOrNull()
 
+
     LaunchedEffect(moodEntries) {
         println("Mood entries updated: $moodEntries")
     }

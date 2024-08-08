@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import java.util.Calendar
+import java.util.Date
 
 class MoodStateHolder{
     var showImageSelector by mutableStateOf(false)
@@ -23,6 +25,8 @@ class MoodStateHolder{
 
     private val _moodEntries = MutableLiveData<List<MoodEntry>>(emptyList())
     val moodEntries: LiveData<List<MoodEntry>> get() = _moodEntries
+
+
 
     fun setSelectedImageRes(imageRes: Int) {
         _selectedImageRes.value = imageRes
@@ -45,5 +49,17 @@ class MoodStateHolder{
         _moodEntries.value = updatedList
         Log.d("MoodViewModel", "Added entry: $moodEntry")
     }
+
+    val groupedByMonthYear = moodEntries.value?.groupBy { entry ->
+        Pair(entry.dateTime.year, entry.dateTime.month)
+    }
+
+    val groupedByMonthYearDay = groupedByMonthYear?.mapValues { entry ->
+        entry.value.groupBy { moodEntry ->
+            moodEntry.dateTime.day
+        }
+    }
+
 }
+
 

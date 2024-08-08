@@ -11,7 +11,6 @@ import java.util.UUID
 class MoodViewModel : ViewModel(){
     val moodStateHolder = MoodStateHolder()
 
-
     init {
         // Add a hardcoded entry on initialization
         addHardcodedEntry()
@@ -45,6 +44,8 @@ class MoodViewModel : ViewModel(){
         moodStateHolder.addMoodEntry(newEntry)
         // TODO: navigate to currentScreen
     }
+
+
 }
 
 

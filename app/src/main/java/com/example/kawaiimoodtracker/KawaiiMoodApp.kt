@@ -19,7 +19,7 @@ fun KawaiiMoodApp(modifier: Modifier = Modifier) {
         startDestination = "AddMoodScreen"
     ) {
         composable("CurrentMoodScreen") { CurrentMoodScreen(navController, moodViewModel = moodViewModel)}
-        composable("MoodCalendarScreen"){ MoodCalendarScreen(navController)}
+        composable("MoodCalendarScreen"){ MoodCalendarScreen(navController, moodViewModel = moodViewModel)}
         composable("AddMoodScreen"){ AddMoodScreen(navController, moodViewModel = moodViewModel)}
         composable("PreviousMoodScreen"){ PreviousMoodScreen(navController)}
     }

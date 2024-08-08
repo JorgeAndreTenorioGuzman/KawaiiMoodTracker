@@ -1,5 +1,7 @@
 package com.example.kawaiimoodtracker
 
+import android.security.identity.CredentialDataResult.Entries
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.ArrowBack
 import androidx.compose.material.icons.sharp.ArrowForward
@@ -22,6 +25,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,19 +39,68 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 @Composable
-fun MoodCalendarScreen(navController: NavController, modifier: Modifier = Modifier) {
+fun MoodCalendarScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    moodViewModel: MoodViewModel
+) {
+
+    val moodEntries by moodViewModel.moodStateHolder.moodEntries.observeAsState(initial = emptyList())
+
+    val groupedByMonthYearDay = remember(moodEntries) {
+        moodEntries.groupBy { entry ->
+            Pair(entry.dateTime.year + 1900, entry.dateTime.month + 1)
+        }.mapValues { entry ->
+            entry.value.groupBy { moodEntry ->
+                moodEntry.dateTime.date
+            }
+        }
+    }
+    Log.d("GroupedEntries", "Grouped Entries: $groupedByMonthYearDay")
+
+    val currentYear = remember { mutableStateOf(Calendar.getInstance().get(Calendar.YEAR)) }
+    val currentMonth = remember { mutableStateOf(Calendar.getInstance().get(Calendar.MONTH) + 1) }
+
+    Log.d("CurrentYearMonth", "Year: ${currentYear.value}, Month: ${currentMonth.value}")
+
+    // Adjust the key to match the corrected grouping
+    val currentMonthKey = Pair(currentYear.value, currentMonth.value)
+    Log.d("MonthKey", "Current Month Key: $currentMonthKey")
+
+    val currentMonthEntries = groupedByMonthYearDay[currentMonthKey] ?: emptyMap()
+    Log.d("CurrentMonthEntries", "Current Month Entries: $currentMonthEntries")
+
 
     Column() {
         TopCloseButton(navController, modifier = modifier.align(Alignment.End))
-        ScrollMonthsBar()
-        RecordedMonthMoods(navController = navController)
+        ScrollMonthsBar(
+            currentYear = currentYear,
+            currentMonth = currentMonth,
+            onMonthChange = { year, month ->
+                currentYear.value = year
+                currentMonth.value = month
+            }
+        )
+
+            RecordedMonthMoods(
+                navController = navController,
+                moodEntries = currentMonthEntries,
+                currentYear = currentYear,
+                currentMonth = currentMonth
+            )
+        }
     }
 
 
-}
+
+
 
 @Composable
 fun TopCloseButton(navController: NavController, modifier: Modifier = Modifier) {
@@ -58,59 +115,109 @@ fun TopCloseButton(navController: NavController, modifier: Modifier = Modifier) 
         )
     }
 }
+
 @Composable
-fun RecordedMonthMoods(navController: NavController, modifier: Modifier = Modifier) {
+fun RecordedMonthMoods(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    moodEntries: Map<Int, List<MoodEntry>>,
+    currentYear: MutableState<Int>,
+    currentMonth: MutableState<Int>,
+) {
+
     LazyColumn {
-        items(10){index ->
+        items(moodEntries.keys.sorted()) { day ->
             Spacer(modifier = modifier.height(24.dp))
-            DayRecordedMoods(navController = navController)
+            DayRecordedMoods(
+                navController = navController,
+                day = day,
+                moods = moodEntries[day] ?: emptyList()
+            )
         }
     }
 }
 
 @Composable
-fun ScrollMonthsBar(modifier: Modifier = Modifier) {
+fun ScrollMonthsBar(
+    modifier: Modifier = Modifier,
+    currentYear: MutableState<Int>,
+    currentMonth: MutableState<Int>,
+    onMonthChange: (Int, Int) -> Unit,
+
+    ) {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
         modifier = modifier.fillMaxWidth()
     ) {
-        IconButton(onClick = { /*TODO*/ }, enabled = true) {
+        IconButton(
+            onClick = {
+                if (currentMonth.value == 1) {
+                    currentMonth.value = 12
+                    currentYear.value -= 1
+                } else {
+                    currentMonth.value -= 1
+                }
+                onMonthChange(currentYear.value, currentMonth.value)
+            },
+            enabled = true
+        ) {
             Icon(
                 imageVector = Icons.Sharp.ArrowBack,
-                contentDescription = ""
+                contentDescription = "Go to Previous Month"
             )
         }
         Text(
-            text = "July 2024",
+            text = "${getMonthName(currentMonth.value)} ${currentYear.value}",
             textAlign = TextAlign.Center,
             fontSize = 20.sp
         )
-        IconButton(onClick = { /*TODO*/ }, enabled = false) {
+        IconButton(
+            onClick = {
+            if (currentMonth.value == 12) {
+                currentMonth.value = 1
+                currentYear.value += 1
+            } else {
+                currentMonth.value += 1
+            }
+            onMonthChange(currentYear.value, currentMonth.value) },
+            enabled = true
+        ) {
             Icon(
                 imageVector = Icons.Sharp.ArrowForward  ,
-                contentDescription = "")
+                contentDescription = "Go to Next Month")
         }
 
     }
 }
 
+fun getMonthName(month: Int): String {
+    return SimpleDateFormat("MMMM", Locale.getDefault()).format(Calendar.getInstance().apply {
+        set(Calendar.MONTH, month - 1)
+    }.time)
+}
+
 @Composable
-fun DayRecordedMoods(navController: NavController, modifier: Modifier = Modifier) {
+fun DayRecordedMoods(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    day: Int,
+    moods: List<MoodEntry>
+    ) {
 
     Column {
         Text(
-            text = "July 29",
+            text = "${getMonthName(moods.first().dateTime.month)} $day",
             fontSize = 20.sp,
             modifier = modifier.padding(start = 16.dp)
             )
         Spacer(modifier = modifier.height(16.dp))
         LazyRow (modifier = modifier.fillMaxWidth()){
-            items(10){index ->
+            items(moods){ mood ->
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(
-                        painter = painterResource(id = R.drawable.awesome_expression),
+                        painter = painterResource(id = mood.selectedImagesRes),
                         modifier = modifier
                             .padding(4.dp)
                             .clip(MaterialTheme.shapes.medium)
@@ -121,9 +228,9 @@ fun DayRecordedMoods(navController: NavController, modifier: Modifier = Modifier
                             )
                             .clickable { navController.navigate("PreviousMoodScreen") },
 
-                        contentDescription = ""
+                        contentDescription = mood.feelingName
                     )
-                   Text(text = "Awesome")
+                   Text(text = mood.feelingName)
                 }
             }
         }
@@ -140,7 +247,7 @@ private fun DayRecordedMoodsPreview() {
 @Preview (showBackground = true)
 @Composable
 private fun ScrollItemsBarPreview() {
-    ScrollMonthsBar()
+    //ScrollMonthsBar()
 }
 
 @Preview (showBackground = true)
