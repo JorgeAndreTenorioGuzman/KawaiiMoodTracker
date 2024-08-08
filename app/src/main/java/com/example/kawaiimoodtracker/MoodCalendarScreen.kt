@@ -93,7 +93,8 @@ fun MoodCalendarScreen(
                 navController = navController,
                 moodEntries = currentMonthEntries,
                 currentYear = currentYear,
-                currentMonth = currentMonth
+                currentMonth = currentMonth,
+                setSelectedMoodIndex = { mood -> moodViewModel.moodStateHolder.setSelectedMoodIndex(mood)}
             )
         }
     }
@@ -123,6 +124,7 @@ fun RecordedMonthMoods(
     moodEntries: Map<Int, List<MoodEntry>>,
     currentYear: MutableState<Int>,
     currentMonth: MutableState<Int>,
+    setSelectedMoodIndex: (MoodEntry) -> Unit
 ) {
 
     LazyColumn {
@@ -131,7 +133,8 @@ fun RecordedMonthMoods(
             DayRecordedMoods(
                 navController = navController,
                 day = day,
-                moods = moodEntries[day] ?: emptyList()
+                moods = moodEntries[day] ?: emptyList(),
+                setSelectedMoodIndex = setSelectedMoodIndex
             )
         }
     }
@@ -203,7 +206,8 @@ fun DayRecordedMoods(
     navController: NavController,
     modifier: Modifier = Modifier,
     day: Int,
-    moods: List<MoodEntry>
+    moods: List<MoodEntry>,
+    setSelectedMoodIndex: (MoodEntry) -> Unit
     ) {
 
     Column {
@@ -226,7 +230,11 @@ fun DayRecordedMoods(
                                 color = Color(0xFFA0A0A0),
                                 shape = MaterialTheme.shapes.medium
                             )
-                            .clickable { navController.navigate("PreviousMoodScreen") },
+                            .clickable {
+                                navController.navigate("PreviousMoodScreen"); setSelectedMoodIndex(
+                                mood
+                            )
+                            },
 
                         contentDescription = mood.feelingName
                     )

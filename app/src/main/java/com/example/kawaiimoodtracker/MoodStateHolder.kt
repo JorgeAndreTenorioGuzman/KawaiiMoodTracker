@@ -26,6 +26,12 @@ class MoodStateHolder{
     private val _moodEntries = MutableLiveData<List<MoodEntry>>(emptyList())
     val moodEntries: LiveData<List<MoodEntry>> get() = _moodEntries
 
+    private val _selectedMoodIndex = MutableLiveData<MoodEntry>()
+    val selectedMoodIndex: LiveData<MoodEntry> get() = _selectedMoodIndex
+
+    fun setSelectedMoodIndex(index: MoodEntry) {
+        _selectedMoodIndex.value = index
+    }
 
 
     fun setSelectedImageRes(imageRes: Int) {
@@ -59,6 +65,8 @@ class MoodStateHolder{
             moodEntry.dateTime.day
         }
     }
+
+
 
 }
 
