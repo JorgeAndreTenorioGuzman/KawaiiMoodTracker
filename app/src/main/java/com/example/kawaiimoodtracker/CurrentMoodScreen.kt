@@ -102,6 +102,9 @@ fun CurrentMoodScreen(
             onReasonSubmitted = {
                 moodStateHolder.setReasonSubmittedText(reasonText)
                 moodStateHolder.reasonSubmitted = true
+                if (mostRecentMood != null) {
+                    mostRecentMood.reason = reasonSubmittedText
+                }
             },
             onEditReasonText = {moodStateHolder.reasonSubmitted = false}
         )

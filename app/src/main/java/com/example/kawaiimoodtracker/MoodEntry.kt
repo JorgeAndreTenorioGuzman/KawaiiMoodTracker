@@ -6,7 +6,8 @@ data class MoodEntry(
     val id: String,
     val selectedImagesRes: Int,
     val feelingName: String,
-    val dateTime: Date
+    val dateTime: Date,
+    var reason: String
 )
 
 

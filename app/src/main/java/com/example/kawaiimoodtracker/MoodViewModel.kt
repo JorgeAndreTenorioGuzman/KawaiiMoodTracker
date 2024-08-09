@@ -24,7 +24,8 @@ class MoodViewModel : ViewModel(){
             id = "1",
             selectedImagesRes = selectedImageRes,
             feelingName = text,
-            dateTime = Date()
+            dateTime = Date(),
+            reason = ""
         )
         moodStateHolder.addMoodEntry(hardcodedEntry)
     }
@@ -38,12 +39,14 @@ class MoodViewModel : ViewModel(){
             id = UUID.randomUUID().toString(),
             selectedImagesRes = selectedImageRes,
             feelingName = text,
-            dateTime = Date()
+            dateTime = Date(),
+            reason = ""
         )
 
         moodStateHolder.addMoodEntry(newEntry)
         // TODO: navigate to currentScreen
     }
+
 
 
 }

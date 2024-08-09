@@ -100,7 +100,7 @@ fun PreviousMoodScreen(
             Spacer(modifier = modifier.height(16.dp))
 
             //Previous mood reason
-            PreviousMoodReason()
+            PreviousMoodReason(selectedmood)
 
         }
     }
@@ -108,10 +108,12 @@ fun PreviousMoodScreen(
 }
 
 @Composable
-fun PreviousMoodReason(modifier: Modifier = Modifier) {
-    Text(
-        text = "I went to watch a movie",
+fun PreviousMoodReason(selectedmood: LiveData<MoodEntry>, modifier: Modifier = Modifier) {
+    selectedmood.value?.let {
+        Text(
+        text = it.reason,
     )
+    }
 }
 
 @Composable
