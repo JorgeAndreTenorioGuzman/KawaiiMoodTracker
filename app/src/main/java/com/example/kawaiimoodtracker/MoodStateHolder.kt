@@ -30,12 +30,25 @@ class MoodStateHolder{
 
     var reasonSubmitted by mutableStateOf(false)
 
-    /*private val _quote = MutableLiveData<String>()
-    val quote: LiveData<String> = _quote
+    private val _quote = MutableLiveData<String>()
+    var quote: LiveData<String> = _quote
 
     private val _author = MutableLiveData<String>()
-    val author: LiveData<String> = _author*/
+    var author: LiveData<String> = _author
 
+
+    fun postquote(value: String){
+        _quote.postValue(value)
+    }
+
+    fun postauthor(value: String){
+        _author.postValue(value)
+    }
+
+    fun clearQuote() {
+        _quote.postValue("")
+        _author.postValue("")
+    }
 
 
 

@@ -57,6 +57,8 @@ fun CurrentMoodScreen(
     val moodEntries by moodStateHolder.moodEntries.observeAsState(emptyList())
     val reasonText by moodStateHolder.reasonText.observeAsState("")
     val reasonSubmittedText by moodStateHolder.reasonSubmittedText.observeAsState("")
+    val quote by moodStateHolder.quote.observeAsState("")
+    val author by moodStateHolder.author.observeAsState("")
 
     val mostRecentMood = moodEntries.lastOrNull()
 
@@ -77,7 +79,11 @@ fun CurrentMoodScreen(
 
         //quote generator
         if (mostRecentMood != null) {
-            QuoteGenerator(quote = mostRecentMood.quote, onCLickGenerateQuote = {moodViewModel.fetchQuoteAndUpdateMoodEntry(mostRecentMood)})
+            QuoteGenerator(
+                quote = quote,
+                onCLickGenerateQuote = {moodViewModel.fetchQuoteAndUpdateMoodEntry(mostRecentMood)},
+                onCLickClose = {moodStateHolder.clearQuote()}
+                )
         }
 
         Spacer(modifier = modifier.height(16.dp))
@@ -169,7 +175,7 @@ fun TopBarButtons(navController: NavHostController, modifier: Modifier = Modifie
 }
 
 @Composable
-fun QuoteGenerator(quote: String, onCLickGenerateQuote: () -> Unit, modifier: Modifier = Modifier) {
+fun QuoteGenerator(quote: String, onCLickGenerateQuote: () -> Unit,onCLickClose: () -> Unit, modifier: Modifier = Modifier) {
     Row (modifier =  modifier.width(230.dp)) {
         IconButton(
             onClick = onCLickGenerateQuote,
@@ -183,7 +189,7 @@ fun QuoteGenerator(quote: String, onCLickGenerateQuote: () -> Unit, modifier: Mo
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(
-            onClick = { /*TODO*/ },
+            onClick = onCLickClose,
 
             ) {
             Icon(
@@ -319,6 +325,7 @@ fun RecordReason(
 }
 
 
+// TODO: erase this or use the new one i used inside the RecordReason composable
 @Composable
 fun AddedReason(modifier: Modifier = Modifier) {
 

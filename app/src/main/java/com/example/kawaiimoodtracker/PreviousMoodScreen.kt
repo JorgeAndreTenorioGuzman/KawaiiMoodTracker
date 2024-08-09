@@ -85,7 +85,7 @@ fun PreviousMoodScreen(
         Column (horizontalAlignment = Alignment.CenterHorizontally,){
 
             //Previous mood recorded quote
-            RecordedQuote()
+            RecordedQuote(selectedmood)
 
             Spacer(modifier = modifier.height(16.dp))
 
@@ -117,14 +117,16 @@ fun PreviousMoodReason(selectedmood: LiveData<MoodEntry>, modifier: Modifier = M
 }
 
 @Composable
-fun RecordedQuote(modifier: Modifier = Modifier) {
-    Text(
-        text = "Quote",
+fun RecordedQuote(selectedMood: LiveData<MoodEntry>, modifier: Modifier = Modifier) {
+    selectedMood.value?.let {
+        Text(
+        text = it.quote,
         modifier = modifier
             .width(271.dp),
         textAlign = TextAlign.Center,
         fontStyle = FontStyle.Italic
     )
+    }
 }
 
 @Composable

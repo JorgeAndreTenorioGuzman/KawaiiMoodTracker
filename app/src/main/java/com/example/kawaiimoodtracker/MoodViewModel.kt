@@ -81,6 +81,9 @@ class MoodViewModel : ViewModel(){
                     fetchedMoodEntry?.let {
                         entry.quote = it.quote
                         entry.author = it.author
+
+                        moodStateHolder.postquote(it.quote)
+                        moodStateHolder.postauthor(it.author)
                     }
                 }
             }
