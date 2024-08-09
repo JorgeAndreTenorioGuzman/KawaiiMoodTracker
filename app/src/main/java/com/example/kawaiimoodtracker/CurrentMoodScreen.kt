@@ -76,7 +76,9 @@ fun CurrentMoodScreen(
         TopBarButtons(navController = navController)
 
         //quote generator
-        QuoteGenerator()
+        if (mostRecentMood != null) {
+            QuoteGenerator(quote = mostRecentMood.quote, onCLickGenerateQuote = {moodViewModel.fetchQuoteAndUpdateMoodEntry(mostRecentMood)})
+        }
 
         Spacer(modifier = modifier.height(16.dp))
 
@@ -167,10 +169,10 @@ fun TopBarButtons(navController: NavHostController, modifier: Modifier = Modifie
 }
 
 @Composable
-fun QuoteGenerator(modifier: Modifier = Modifier) {
+fun QuoteGenerator(quote: String, onCLickGenerateQuote: () -> Unit, modifier: Modifier = Modifier) {
     Row (modifier =  modifier.width(230.dp)) {
         IconButton(
-            onClick = { /*TODO*/ },
+            onClick = onCLickGenerateQuote,
 
 
             ) {
@@ -186,12 +188,12 @@ fun QuoteGenerator(modifier: Modifier = Modifier) {
             ) {
             Icon(
                 imageVector = Icons.Sharp.Close,
-                contentDescription = "Generate quote"
+                contentDescription = "cancel quote"
             )
         }
     }
     Text(
-        text = "Generate quote",
+        text = quote,
         modifier = modifier
             .width(271.dp),
         textAlign = TextAlign.Center,
