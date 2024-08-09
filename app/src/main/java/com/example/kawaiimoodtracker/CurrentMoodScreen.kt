@@ -82,7 +82,7 @@ fun CurrentMoodScreen(
             QuoteGenerator(
                 quote = quote,
                 onCLickGenerateQuote = {moodViewModel.fetchQuoteAndUpdateMoodEntry(mostRecentMood)},
-                onCLickClose = {moodStateHolder.clearQuote()}
+                onCLickClose = {moodStateHolder.clearQuote(); mostRecentMood.quote = ""; mostRecentMood.author = ""}
                 )
         }
 
