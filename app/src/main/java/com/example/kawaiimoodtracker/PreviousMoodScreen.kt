@@ -36,7 +36,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import com.example.kawaiimoodtracker.ui.theme.KawaiiMoodTrackerTheme
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 @Composable
 fun PreviousMoodScreen(
@@ -93,7 +95,7 @@ fun PreviousMoodScreen(
             Spacer(modifier = modifier.height(16.dp))
 
             //Previous time and date of mood
-            DateTimePreviousMood()
+            DateTimePreviousMood(selectedmood)
             
             Spacer(modifier = modifier.height(16.dp))
 
@@ -136,9 +138,15 @@ fun TopBackButton(navController: NavController, modifier: Modifier = Modifier) {
     }
 }
 @Composable
-fun DateTimePreviousMood(modifier: Modifier = Modifier) {
+fun DateTimePreviousMood(selectedMoood: LiveData<MoodEntry>, modifier: Modifier = Modifier) {
+
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+    val dateString = dateFormat.format(selectedMoood.value?.dateTime ?: "")
+    val timeString = timeFormat.format(selectedMoood.value?.dateTime ?: "")
+
     Text(
-        text = "July 29",
+        text = dateString,
         fontSize = 20.sp,
         modifier = modifier
             .width(103.dp)
@@ -146,7 +154,7 @@ fun DateTimePreviousMood(modifier: Modifier = Modifier) {
         textAlign = TextAlign.Center,
     )
     Text(
-        text = "9:00 pm",
+        text = timeString,
         fontSize = 20.sp,
         modifier = modifier
             .width(103.dp)
@@ -178,13 +186,15 @@ fun MoodExpression(selectedMoood: LiveData<MoodEntry>, modifier: Modifier = Modi
         }
     }
     Spacer(modifier = modifier.height(16.dp))
-    Text(
-        text = "Awesome",
+    selectedMoood.value?.let {
+        Text(
+        text = it.feelingName,
         fontSize = 24.sp,
         modifier = modifier
             .width(187.dp),
         textAlign = TextAlign.Center,
     )
+    }
 }
 
 @Preview (showBackground = true)
