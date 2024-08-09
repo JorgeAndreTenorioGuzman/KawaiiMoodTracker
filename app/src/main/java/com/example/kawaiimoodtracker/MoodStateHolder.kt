@@ -14,12 +14,22 @@ class MoodStateHolder{
     /*var selectedImageRes by mutableStateOf(R.drawable.ic_launcher_background)
     var text by mutableStateOf("")*/
 
-
     private val _selectedImageRes = MutableLiveData(R.drawable.ic_launcher_background)
     val selectedImageRes: LiveData<Int> get() = _selectedImageRes
 
     private val _text = MutableLiveData("")
     val text: LiveData<String> get() = _text
+
+
+    // Reason Text states
+    private val _reasonText = MutableLiveData("")
+    val reasonText: LiveData<String> get() = _reasonText
+
+    private val _reasonSubmittedText = MutableLiveData("")
+    val reasonSubmittedText: LiveData<String> get() = _reasonSubmittedText
+
+    var reasonSubmitted by mutableStateOf(false)
+
 
 
 
@@ -40,6 +50,14 @@ class MoodStateHolder{
 
     fun setText(newText: String) {
         _text.value = newText
+    }
+
+    fun setReasonText(newText: String) {
+        _reasonText.value = newText
+    }
+
+    fun setReasonSubmittedText(newText: String) {
+        _reasonSubmittedText.value = newText
     }
 
 

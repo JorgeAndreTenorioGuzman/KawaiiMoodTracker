@@ -53,7 +53,11 @@ fun CurrentMoodScreen(
     moodViewModel: MoodViewModel
 ) {
 
-    val moodEntries by moodViewModel.moodStateHolder.moodEntries.observeAsState(emptyList())
+    val moodStateHolder = moodViewModel.moodStateHolder
+    val moodEntries by moodStateHolder.moodEntries.observeAsState(emptyList())
+    val reasonText by moodStateHolder.reasonText.observeAsState("")
+    val reasonSubmittedText by moodStateHolder.reasonSubmittedText.observeAsState("")
+
     val mostRecentMood = moodEntries.lastOrNull()
 
 
@@ -90,7 +94,17 @@ fun CurrentMoodScreen(
         
         Spacer(modifier = modifier.height(16.dp))
 
-        RecordReason()
+        RecordReason(
+            reasonText = reasonText,
+            onValueChange = {moodStateHolder.setReasonText(it)},
+            reasonSubmitted = moodStateHolder.reasonSubmitted,
+            reasonSubmittedText = reasonSubmittedText,
+            onReasonSubmitted = {
+                moodStateHolder.setReasonSubmittedText(reasonText)
+                moodStateHolder.reasonSubmitted = true
+            },
+            onEditReasonText = {moodStateHolder.reasonSubmitted = false}
+        )
 
         Spacer(modifier = modifier.height(16.dp))
 
@@ -213,55 +227,90 @@ fun ExpressionImage(mustRecentMood: MoodEntry, modifier: Modifier = Modifier) {
     )
 }
 @Composable
-fun RecordReason(modifier: Modifier = Modifier) {
+fun RecordReason(
+    reasonText: String,
+    onValueChange: (String) -> Unit,
+    reasonSubmitted: Boolean,
+    onReasonSubmitted: () -> Unit,
+    reasonSubmittedText: String,
+    modifier: Modifier = Modifier,
+    onEditReasonText: () -> Unit
+) {
 
-    Row (
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        TextField(
-            value = "",
-            label = { Text(
-                text = "Add reason",
-                fontSize = 13.sp,
-                color = Color(0xFF939393),
+        if (reasonSubmitted) {
+            Row (
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ){
+                Text(
+                    text = reasonSubmittedText,
+                    modifier = modifier
+                        .width(212.dp)
+                        .height(41.dp)
+                )
+                IconButton(
+                    onClick = onEditReasonText,
+                    modifier = modifier.size(48.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Sharp.Edit,
+                        contentDescription = "Edit reason",
+                    )
+                }
+            }
+        } else {
+            Row (
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
 
-            )},
-            onValueChange = {},
-            modifier = Modifier
-                .width(212.dp)
-                .height(41.dp)
-                .border(
-                    width = 1.dp,
-                    shape = MaterialTheme.shapes.medium,
-                    color = Color(0xFFA0A0A0)
-                ),
-            shape = MaterialTheme.shapes.medium,
-            colors = TextFieldDefaults.colors(
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                focusedContainerColor = Color(0xFFFDBED4)
-            ),
-        )
-        Spacer(modifier = modifier.width(4.dp))
-        IconButton(
-            onClick = { /*TODO*/},
-            modifier = Modifier
-                .size(41.dp)
-                .padding(0.dp),
-            /*shape = MaterialTheme.shapes.medium,*/
+            TextField(
+                value = reasonText,
+                onValueChange = onValueChange,
+                label = { Text(
+                    text = "Add reason",
+                    fontSize = 13.sp,
+                    color = Color(0xFF939393),
 
-        ) {
-            Icon(
-                imageVector = Icons.Sharp.Send,
-                contentDescription = "send",
-                tint = Color(0xFFFDBED4),
+                    )},
                 modifier = Modifier
-                    .size(24.dp),
+                    .width(212.dp)
+                    .height(41.dp)
+                    .border(
+                        width = 1.dp,
+                        shape = MaterialTheme.shapes.medium,
+                        color = Color(0xFFA0A0A0)
+                    ),
+                shape = MaterialTheme.shapes.medium,
+                colors = TextFieldDefaults.colors(
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedContainerColor = Color(0xFFFDBED4)
+                ),
             )
+
+            Spacer(modifier = modifier.width(4.dp))
+            IconButton(
+                onClick = onReasonSubmitted,
+                modifier = Modifier
+                    .size(48.dp)
+                    .padding(0.dp),
+                /*shape = MaterialTheme.shapes.medium,*/
+
+            ) {
+                Icon(
+                    imageVector = Icons.Sharp.Send,
+                    contentDescription = "send",
+                    tint = Color(0xFFFDBED4),
+                    modifier = Modifier
+                        .size(24.dp),
+                    )
+                }
+            }
+
         }
-    }
+
 }
 
 
@@ -291,7 +340,7 @@ private fun AddedReasonPreview() {
 @Preview
 @Composable
 private fun RecordReasonPreview() {
-    RecordReason()
+   // RecordReason()
 }
 
 @Preview(showBackground = true)
