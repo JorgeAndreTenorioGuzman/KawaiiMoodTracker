@@ -255,9 +255,9 @@ fun RecordReason(
             ){
                 Text(
                     text = reasonSubmittedText,
+                    textAlign = TextAlign.Center,
                     modifier = modifier
                         .width(212.dp)
-                        .height(41.dp)
                 )
                 IconButton(
                     onClick = onEditReasonText,
