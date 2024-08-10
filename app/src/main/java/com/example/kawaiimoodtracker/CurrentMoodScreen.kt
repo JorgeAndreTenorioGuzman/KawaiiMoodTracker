@@ -286,7 +286,6 @@ fun RecordReason(
                     )},
                 modifier = Modifier
                     .width(212.dp)
-                    .height(41.dp)
                     .border(
                         width = 1.dp,
                         shape = MaterialTheme.shapes.medium,
@@ -297,7 +296,10 @@ fun RecordReason(
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
-                    focusedContainerColor = Color(0xFFFDBED4)
+                    focusedLabelColor = Color(0xFF9F4666),
+                    focusedTextColor = Color(0xFF9F4666),
+                    focusedContainerColor = Color(0xFFFFE1EC),
+                    unfocusedTextColor = Color(0xFFFFE1EC)
                 ),
             )
 

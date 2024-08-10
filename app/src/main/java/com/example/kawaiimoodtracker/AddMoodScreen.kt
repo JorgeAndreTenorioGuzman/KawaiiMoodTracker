@@ -256,13 +256,21 @@ fun NameFeelingTextField(text: String, onTextChange: (String) -> Unit, modifier:
         shape = MaterialTheme.shapes.medium,
         modifier = modifier
             .width(257.dp)
-            .height(48.dp),
+            .border(
+                width = 1.dp,
+                shape = MaterialTheme.shapes.medium,
+                color = Color(0xFFA0A0A0)
+            ),
         colors = TextFieldDefaults.colors(
             unfocusedIndicatorColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,
-            focusedContainerColor = Color(0xFFD9D9D9),
-            unfocusedContainerColor = Color(0xFFD9D9D9)
+            focusedContainerColor = Color(0xFFFFE1EC),
+            unfocusedContainerColor = Color.Transparent,
+            focusedLabelColor = Color(0xFF9F4666),
+            focusedTextColor = Color(0xFF9F4666),
+            unfocusedTextColor = Color(0xFFFFE1EC)
         ),
+
     )
 }
 
