@@ -91,6 +91,7 @@ fun AddMoodScreen(
     val moodStateHolder = moodViewModel.moodStateHolder
     val selectedImageRes by moodStateHolder.selectedImageRes.observeAsState(R.drawable.ic_launcher_background)
     val text by moodStateHolder.text.observeAsState("")
+    val firstMoodSubmitted by moodStateHolder.firstMoodSubmitted.observeAsState(false)
 
     Log.d("AddMoodScreen", "SelectedImageRes: $selectedImageRes")
     Log.d("AddMoodScreen", "Text: $text")
@@ -102,7 +103,9 @@ fun AddMoodScreen(
 
         Spacer(modifier = modifier.height(32.dp))
 
-        CancelButton(navController, modifier = Modifier.align(Alignment.End))
+        if (firstMoodSubmitted) {
+            CancelButton(navController, modifier = Modifier.align(Alignment.End))
+        }
 
         HowAreYouText()
 
@@ -128,7 +131,12 @@ fun AddMoodScreen(
 
         Spacer(modifier = modifier.height(16.dp))
 
-        AddMoodButton(navController,onClickAddMood = {moodViewModel.addMoodEntry()})
+        AddMoodButton(
+            navController = navController,
+            onClickAddMood = {
+                moodViewModel.addMoodEntry()
+                moodStateHolder.setFirstMoodSubmitted(true)
+            })
 
 
     }

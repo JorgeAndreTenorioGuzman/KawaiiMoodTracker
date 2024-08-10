@@ -37,6 +37,14 @@ class MoodStateHolder{
     private val _author = MutableLiveData<String>()
     var author: LiveData<String> = _author
 
+    private val _firstMoodSubmitted = MutableLiveData<Boolean>(false)
+    val firstMoodSubmitted: LiveData<Boolean> get() = _firstMoodSubmitted
+
+
+
+    fun setFirstMoodSubmitted(value: Boolean){
+        _firstMoodSubmitted.value = value
+    }
 
     fun postquote(value: String){
         _quote.postValue(value)

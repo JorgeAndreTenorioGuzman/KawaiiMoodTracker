@@ -18,7 +18,7 @@ import java.util.UUID
 class MoodViewModel : ViewModel(){
     val moodStateHolder = MoodStateHolder()
 
-    init {
+ /*   init {
         // Add a hardcoded entry on initialization
         addHardcodedEntry()
        // MoodEntry("1", R.drawable.awesome_expression, "awesome", Date())
@@ -38,7 +38,7 @@ class MoodViewModel : ViewModel(){
         )
         moodStateHolder.addMoodEntry(hardcodedEntry)
     }
-
+*/
     fun addMoodEntry(){
 
         val selectedImageRes = moodStateHolder.selectedImageRes.value ?: R.drawable.ic_launcher_background
