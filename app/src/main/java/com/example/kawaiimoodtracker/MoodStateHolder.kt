@@ -40,6 +40,12 @@ class MoodStateHolder{
     private val _firstMoodSubmitted = MutableLiveData<Boolean>(false)
     val firstMoodSubmitted: LiveData<Boolean> get() = _firstMoodSubmitted
 
+    private val _imageSelected = MutableLiveData<Boolean>(false)
+    val imageSelected: LiveData<Boolean> get() = _imageSelected
+
+    fun setImageSelected(value: Boolean){
+        _imageSelected.value = value
+    }
 
 
     fun setFirstMoodSubmitted(value: Boolean){

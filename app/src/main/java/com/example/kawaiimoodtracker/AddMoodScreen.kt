@@ -92,6 +92,7 @@ fun AddMoodScreen(
     val selectedImageRes by moodStateHolder.selectedImageRes.observeAsState(R.drawable.baseline_add_circle)
     val text by moodStateHolder.text.observeAsState("")
     val firstMoodSubmitted by moodStateHolder.firstMoodSubmitted.observeAsState(false)
+    val imageSelected by moodStateHolder.imageSelected.observeAsState(initial = false)
 
     Log.d("AddMoodScreen", "SelectedImageRes: $selectedImageRes")
     Log.d("AddMoodScreen", "Text: $text")
@@ -115,6 +116,7 @@ fun AddMoodScreen(
             onImageSelected = { imageRes ->
                 moodStateHolder.setSelectedImageRes(imageRes)
                 moodStateHolder.showImageSelector = false
+                moodStateHolder.setImageSelected(value = true)
             },
             showImageSelector = moodStateHolder.showImageSelector,
             onShowImageSelector =  {moodStateHolder.showImageSelector = true},
@@ -136,20 +138,22 @@ fun AddMoodScreen(
             onClickAddMood = {
                 moodViewModel.addMoodEntry()
                 moodStateHolder.setFirstMoodSubmitted(true)
-            })
+            },
+            imageSelected = imageSelected
+        )
 
 
     }
 }
 
 @Composable
-fun AddMoodButton(navController: NavController, onClickAddMood: () -> Unit, modifier: Modifier = Modifier) {
+fun AddMoodButton(imageSelected: Boolean, navController: NavController, onClickAddMood: () -> Unit, modifier: Modifier = Modifier) {
     Button(
         onClick = {
             onClickAddMood()
             navController.navigate("CurrentMoodScreen")
         },
-        enabled = true,
+        enabled = imageSelected,
         modifier = Modifier
             // .padding(24.dp)
             .height(46.dp)
