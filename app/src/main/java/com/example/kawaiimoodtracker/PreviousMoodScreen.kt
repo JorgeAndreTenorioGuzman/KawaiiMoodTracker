@@ -144,17 +144,15 @@ fun TopBackButton(navController: NavController, modifier: Modifier = Modifier) {
 @Composable
 fun DateTimePreviousMood(selectedMoood: LiveData<MoodEntry>, modifier: Modifier = Modifier) {
 
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+    val dateFormat = SimpleDateFormat("MMMM dd yyy", Locale.getDefault())
+    val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     val dateString = dateFormat.format(selectedMoood.value?.dateTime ?: "")
     val timeString = timeFormat.format(selectedMoood.value?.dateTime ?: "")
+    val capitalizedDate = dateString.replaceFirstChar { it.uppercase() }
 
     Text(
-        text = dateString,
+        text = capitalizedDate,
         fontSize = 20.sp,
-        modifier = modifier
-            .width(103.dp)
-            .height(23.dp),
         textAlign = TextAlign.Center,
     )
     Text(

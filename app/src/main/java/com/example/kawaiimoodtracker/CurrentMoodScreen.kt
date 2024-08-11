@@ -126,16 +126,16 @@ fun CurrentMoodScreen(
 @Composable
 fun DateTimeMood(mustRecentMood: MoodEntry,modifier: Modifier = Modifier) {
 
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+    val dateFormat = SimpleDateFormat("MMMM dd yyy", Locale.getDefault())
+    val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     val dateString = dateFormat.format(mustRecentMood.dateTime)
     val timeString = timeFormat.format(mustRecentMood.dateTime)
+    val capitalizedDate = dateString.replaceFirstChar { it.uppercase() }
+
 
     Text(
-        text = dateString,
+        text = capitalizedDate,
         fontSize = 20.sp,
-        modifier = modifier
-            .width(103.dp),
         textAlign = TextAlign.Center,
     )
     Spacer(modifier = modifier.height(8.dp))
