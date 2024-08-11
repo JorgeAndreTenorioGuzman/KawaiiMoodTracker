@@ -75,7 +75,7 @@ fun CurrentMoodScreen(
     ) {
 
         //top bar buttons
-        TopBarButtons(navController = navController)
+        TopBarButtons(navController = navController, onClickResetExpressionImage = {moodStateHolder.setImageSelected(value = false)})
 
         //quote generator
         if (mostRecentMood != null) {
@@ -150,7 +150,7 @@ fun DateTimeMood(mustRecentMood: MoodEntry,modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TopBarButtons(navController: NavHostController, modifier: Modifier = Modifier) {
+fun TopBarButtons(onClickResetExpressionImage: () -> Unit, navController: NavHostController, modifier: Modifier = Modifier) {
     Row (modifier =  modifier.fillMaxWidth()){
         IconButton(
             onClick = { navController.navigate("MoodCalendarScreen")},
@@ -163,7 +163,7 @@ fun TopBarButtons(navController: NavHostController, modifier: Modifier = Modifie
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(
-            onClick = {navController.navigate("AddMoodScreen")},
+            onClick = {navController.navigate("AddMoodScreen"); onClickResetExpressionImage()},
         ) {
             Icon(
                 imageVector = Icons.Sharp.AddCircle,

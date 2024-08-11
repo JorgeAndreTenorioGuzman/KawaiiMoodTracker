@@ -138,6 +138,11 @@ fun AddMoodScreen(
             onClickAddMood = {
                 moodViewModel.addMoodEntry()
                 moodStateHolder.setFirstMoodSubmitted(true)
+                moodStateHolder.setSelectedImageRes(R.drawable.baseline_add_circle)
+                moodStateHolder.reasonSubmitted = false
+                moodStateHolder.setReasonText("")
+                moodStateHolder.setReasonSubmittedText("")
+                moodStateHolder.setText("")
             },
             imageSelected = imageSelected
         )
