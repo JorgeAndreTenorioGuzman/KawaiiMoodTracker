@@ -89,7 +89,7 @@ fun AddMoodScreen(
 ) {
 
     val moodStateHolder = moodViewModel.moodStateHolder
-    val selectedImageRes by moodStateHolder.selectedImageRes.observeAsState(R.drawable.ic_launcher_background)
+    val selectedImageRes by moodStateHolder.selectedImageRes.observeAsState(R.drawable.baseline_add_circle)
     val text by moodStateHolder.text.observeAsState("")
     val firstMoodSubmitted by moodStateHolder.firstMoodSubmitted.observeAsState(false)
 

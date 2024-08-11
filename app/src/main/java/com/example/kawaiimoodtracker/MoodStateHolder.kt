@@ -15,7 +15,7 @@ class MoodStateHolder{
     /*var selectedImageRes by mutableStateOf(R.drawable.ic_launcher_background)
     var text by mutableStateOf("")*/
 
-    private val _selectedImageRes = MutableLiveData(R.drawable.ic_launcher_background)
+    private val _selectedImageRes = MutableLiveData(R.drawable.baseline_add_circle)
     val selectedImageRes: LiveData<Int> get() = _selectedImageRes
 
     private val _text = MutableLiveData("")
