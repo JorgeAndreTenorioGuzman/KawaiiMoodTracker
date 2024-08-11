@@ -213,7 +213,7 @@ fun DayRecordedMoods(
 
     Column {
         Text(
-            text = "${getMonthName(moods.first().dateTime.month)} $day",
+            text = "${getMonthName(moods.first().dateTime.month + 1)} $day",
             fontSize = 20.sp,
             modifier = modifier.padding(start = 16.dp)
             )
