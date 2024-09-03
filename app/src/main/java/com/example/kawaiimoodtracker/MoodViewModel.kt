@@ -1,9 +1,15 @@
 package com.example.kawaiimoodtracker
 
+import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.res.painterResource
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.observeOn
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,8 +21,18 @@ import java.util.UUID
 
 
 
-class MoodViewModel : ViewModel(){
-    val moodStateHolder = MoodStateHolder()
+class MoodViewModel(application: Application) : AndroidViewModel(application){
+    val moodStateHolder = MoodStateHolder(application)
+
+    init {
+    viewModelScope.launch {
+        moodStateHolder.moodDao.getMoodOrderedByDateTime().observeForever { entries ->
+            moodStateHolder.setMoodEntries(moodEntries = entries)
+
+        }
+        }
+    }
+
 
  /*   init {
         // Add a hardcoded entry on initialization
@@ -54,8 +70,12 @@ class MoodViewModel : ViewModel(){
             author = ""
         )
 
+        //insert new mood in mood entry list
         moodStateHolder.addMoodEntry(newEntry)
-        // TODO: navigate to currentScreen
+        //insert new mood in Room database
+        viewModelScope.launch (Dispatchers.IO){
+            moodStateHolder.moodDao.insertMood(newEntry)
+        }
     }
 
     object RetrofitInstance {

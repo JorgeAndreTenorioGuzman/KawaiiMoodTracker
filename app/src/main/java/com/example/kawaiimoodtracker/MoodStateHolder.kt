@@ -1,5 +1,6 @@
 package com.example.kawaiimoodtracker
 
+import android.app.Application
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,7 +11,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import java.util.Calendar
 import java.util.Date
 
-class MoodStateHolder{
+class MoodStateHolder(application: Application){
     var showImageSelector by mutableStateOf(false)
     /*var selectedImageRes by mutableStateOf(R.drawable.ic_launcher_background)
     var text by mutableStateOf("")*/
@@ -40,6 +41,7 @@ class MoodStateHolder{
     private val _firstMoodSubmitted = MutableLiveData<Boolean>(false)
     val firstMoodSubmitted: LiveData<Boolean> get() = _firstMoodSubmitted
 
+
     private val _imageSelected = MutableLiveData<Boolean>(false)
     val imageSelected: LiveData<Boolean> get() = _imageSelected
 
@@ -66,9 +68,10 @@ class MoodStateHolder{
     }
 
 
-
+    val moodDao = MoodEntryDatabase.getDatabase(application).moodEntryDao()
     private val _moodEntries = MutableLiveData<List<MoodEntry>>(emptyList())
     val moodEntries: LiveData<List<MoodEntry>> get() = _moodEntries
+
 
     private val _selectedMoodIndex = MutableLiveData<MoodEntry>()
     val selectedMoodIndex: LiveData<MoodEntry> get() = _selectedMoodIndex
@@ -106,6 +109,10 @@ class MoodStateHolder{
 
         _moodEntries.value = updatedList
         Log.d("MoodViewModel", "Added entry: $moodEntry")
+    }
+
+    fun setMoodEntries(moodEntries: List<MoodEntry>){
+        _moodEntries.value = moodEntries
     }
 
     val groupedByMonthYear = moodEntries.value?.groupBy { entry ->
